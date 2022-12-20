@@ -1,0 +1,12 @@
+version: "2.1"
+
+services:
+  node:
+    container_name: attendancyapp
+    build: ./
+    ports:
+      - 4200:4200
+    volumes:
+      - "./:/var/www/html"
+    working_dir: /var/www/html
+    command: ng serve --host 0.0.0.0 --poll=2000
