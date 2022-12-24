@@ -1,6 +1,12 @@
-<body>
-  <app-nav-menu></app-nav-menu>
-  <main class="container">
-    <router-outlet></router-outlet>
-  </main>
-</body>
+<div class="qr-code-container" style="position: initial;
+text-align: center;">
+  <h1>{{title}}</h1>
+  <img [src]="qrCodeData" alt="QR code" style="width: 500px;
+  width: 500px;
+  height: 500px;
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);;">
+</div>

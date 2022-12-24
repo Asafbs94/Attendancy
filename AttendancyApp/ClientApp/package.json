@@ -28,6 +28,7 @@
     "jquery": "^3.6.0",
     "oidc-client": "^1.11.5",
     "popper.js": "^1.16.0",
+    "qrcode": "^1.5.1",
     "run-script-os": "^1.1.6",
     "rxjs": "~7.5.6",
     "tslib": "^2.4.0",
@@ -40,6 +41,7 @@
     "@types/jasmine": "~4.3.0",
     "@types/jasminewd2": "~2.0.10",
     "@types/node": "^18.7.11",
+    "@types/qrcode": "^1.5.0",
     "jasmine-core": "~4.3.0",
     "karma": "~6.4.0",
     "karma-chrome-launcher": "~3.1.1",
@@ -50,6 +52,5 @@
   },
   "overrides": {
     "autoprefixer": "10.4.5"
-  },
-  "optionalDependencies": {}
+  }
 }
