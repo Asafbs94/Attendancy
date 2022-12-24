@@ -5,7 +5,10 @@
       "launchBrowser": true,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
-        "ASPNETCORE_HOSTINGSTARTUPASSEMBLIES": "Microsoft.AspNetCore.SpaProxy"
+        "ASPNETCORE_HOSTINGSTARTUPASSEMBLIES": "Microsoft.AspNetCore.SpaProxy",
+        "SignalR__TransportType": "WebSockets",
+        "SignalR__Endpoint": "https://localhost:7267/toastr"
+      }
       },
       "applicationUrl": "https://localhost:7267;http://localhost:5016"
     },

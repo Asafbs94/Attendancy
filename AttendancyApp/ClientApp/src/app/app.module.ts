@@ -6,21 +6,22 @@ import { AppComponent } from './app.component';
 import { LocationSenderComponent } from './location-sender/location-sender.component';
 import { AppRoutingModule } from './app-routing.module';
 import { DashboardComponent } from './dashboard/dashboard.component';
-
+import { SignalrService } from './signalr.service';
 
 @NgModule({
   declarations: [
     AppComponent,
     LocationSenderComponent,
-    DashboardComponent
+    DashboardComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
     FormsModule,
-    AppRoutingModule
+    AppRoutingModule,
+
   ],
-  providers: [],
+  providers: [SignalrService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
