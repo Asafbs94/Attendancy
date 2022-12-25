@@ -13,7 +13,7 @@ A web application for tracking attendancy and absenteeism in organizations. Buil
 The project can be built and run using [Docker](https://www.docker.com/). To set up the development environment:
 
 1. Install [Docker](https://www.docker.com/get-started)
-2. Clone this repository: `git clone https://github.com/BlackChesire/attendancy-track-app.git`
+2. Clone this repository: `git clone https://github.com/BlackChesire/Attendancy.git`
 3. Navigate to the root directory of the repository: `cd attendancy-track-app`
 4. Build the Docker image: `docker build -t attendancy-track-app .`
 5. Run the Docker container: `docker run -p 8080:80 attendancy-track-app`
