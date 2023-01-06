@@ -2,7 +2,7 @@
 
 <h1 style="text-align: center; margin-top: 1rem;">Let's see who arrived!</h1>
 <div class="student-card-list">
-  <div class="student-card" *ngFor="let student of students">
+  <div class="student-card" *ngFor="let student of students" [ngClass]="{'fade-in': student.fadedIn}">
     <div class="student-card-picture-container">
       <img [src]="student.profilePictureUrl" alt="Profile picture" class="student-card-picture">
     </div>
