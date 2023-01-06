@@ -7,12 +7,20 @@ import { LocationSenderComponent } from './location-sender/location-sender.compo
 import { AppRoutingModule } from './app-routing.module';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { SignalrService } from './signalr.service';
+import { ReportComponent } from './report/report.component';
+import { NavbarComponent } from './navbar/navbar.component';
+import { AttendanceComponent } from './attendance/attendance.component';
+import { SettingsComponent } from './settings/settings.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LocationSenderComponent,
     DashboardComponent,
+    ReportComponent,
+    NavbarComponent,
+    AttendanceComponent,
+    SettingsComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),

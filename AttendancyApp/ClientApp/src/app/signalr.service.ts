@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import * as signalR from "@microsoft/signalr";
-import { environment } from 'src/environments/environment';
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SignalrService {
   public hubConnection: signalR.HubConnection;
+  studentReceived = new Subject<any>();
 
   constructor() {
     this.startConnection();
@@ -29,6 +30,12 @@ export class SignalrService {
   }
   NotiftyArrival(StudentID: string){
       alert(StudentID+ " Has Arrived");
+      }
+
+      addStudentReceivedListener(): void {
+        this.hubConnection.on('studentReceived', (student: any) => {
+          this.studentReceived.next(student);
+        });
       }
 
 }
