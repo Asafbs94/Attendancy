@@ -30,10 +30,26 @@ namespace AttendancyApp.Controllers
             {
                 await hubContext.Clients.All.SendAsync("NotifyArrival", studentID);
             });
+            StudentCard Avichai = new StudentCard 
+            {
+                name = "Avichai Aziz",
+                profilePictureUrl = @"https://scontent.ftlv1-1.fna.fbcdn.net/v/t39.30808-6/240000839_4964717366877980_2719254003850920022_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=NDHly7LMDtEAX-MKfLL&tn=6nTCq-vOe_Rr6OQ5&_nc_ht=scontent.ftlv1-1.fna&oh=00_AfB4Ueo1Tqp4ACQdMdDMjCSzWNo8KTP051xdpMj-0iUPjA&oe=63BD4024"
+            };
+
+
+
             /* data werll be a student id, when getting it were gonna import this student by id
              * and add the student to attendted list of students,
              * we will impmlemt another Get request for attendtend students.
+             * need a db!
              */
+            // we need to get the student profile picture and name from the database of the moodle and then
+            Task.Run(async () =>
+            {
+                await hubContext.Clients.All.SendAsync("studentReceived", Avichai);
+            });
+
+
             return Ok();
         }
         [HttpGet]
@@ -51,5 +67,13 @@ namespace AttendancyApp.Controllers
         public double lat { get; set; }
         public double lng { get; set; }
 
+    }
+
+    public class StudentCard
+    {
+        public string? name { get; set; }
+        public string? profilePictureUrl { get; set; }
+
+        private bool fadedIn = true;
     }
 }

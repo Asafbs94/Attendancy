@@ -6,7 +6,7 @@ a {
 }
 
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+  box-shadow: 0 0 0 0.7rem white, 0 0 0 0.25rem #258cfb;
 }
 
 code {
@@ -17,4 +17,61 @@ code {
   color: #fff;
   background-color: #1b6ec2;
   border-color: #1861ac;
+}
+.toast-container {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 9999;
+  pointer-events: none;
+}
+
+.toast {
+  position: relative;
+  pointer-events: auto;
+  overflow: hidden;
+  margin: 0 0 6px;
+  padding: 30px;
+  width: 400px;
+  border-radius: 30px;
+  background-color: rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 12px #999;
+}
+
+.toast-title {
+  margin: 0 0 10px;
+  font-weight: bold;
+  font-size: 18px;
+  color: #fff;
+}
+
+.toast-message {
+  font-size: 20px;
+  color: #fff;
+  margin: 20px;
+}
+
+.toast-success {
+  background-color: #51a351;
+}
+
+.toast-error {
+  background-color: #bd362f;
+}
+
+.toast-warning {
+  background-color: #f89406;
+}
+
+.toast-info {
+  background-color: #2f96b4;
+}
+
+.toast-progress {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 4px;
+  background-color: #000000;
+  opacity: 0.4;
 }

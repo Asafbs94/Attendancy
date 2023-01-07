@@ -1,18 +1,21 @@
 import { Injectable } from '@angular/core';
 import * as signalR from "@microsoft/signalr";
-import { environment } from 'src/environments/environment';
+import { Subject } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SignalrService {
   public hubConnection: signalR.HubConnection;
+  studentReceived = new Subject<any>();
 
-  constructor() {
+  constructor(private toastr: ToastrService) {
     this.startConnection();
     this.hubConnection.on("NotifyArrival",(StudentID)=>{
       this.NotiftyArrival(StudentID)
     })
+
   }
 
   startConnection() {
@@ -28,7 +31,13 @@ export class SignalrService {
       .catch(err => console.log('Error while starting connection: ' + err))
   }
   NotiftyArrival(StudentID: string){
-      alert(StudentID+ " Has Arrived");
+      this.toastr.success(StudentID + " Has Arrived!", 'New Student');
+      }
+
+      addStudentReceivedListener(): void {
+        this.hubConnection.on('studentReceived', (student: any) => {
+          this.studentReceived.next(student);
+        });
       }
 
 }

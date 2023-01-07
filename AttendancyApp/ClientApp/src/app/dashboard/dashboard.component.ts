@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import * as QRCode from 'qrcode';
 import { style } from '@angular/animations';
 import { ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
@@ -15,7 +16,7 @@ export class DashboardComponent implements OnInit {
   title:string;
   gpsLocation: any;
   employees = [];
-  constructor(private http: HttpClient,private route: ActivatedRoute) {
+  constructor(private http: HttpClient,private route: ActivatedRoute,private router: Router) {
     this.uniqueCode = this.generateUniqueCode();
   }
 
