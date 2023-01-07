@@ -11,6 +11,7 @@ import { ReportComponent } from './report/report.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { AttendanceComponent } from './attendance/attendance.component';
 import { SettingsComponent } from './settings/settings.component';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [
@@ -21,12 +22,14 @@ import { SettingsComponent } from './settings/settings.component';
     NavbarComponent,
     AttendanceComponent,
     SettingsComponent,
+
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
     FormsModule,
     AppRoutingModule,
+    ToastrModule.forRoot(),
 
   ],
   providers: [SignalrService],

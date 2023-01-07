@@ -14,6 +14,7 @@ export class AttendanceComponent implements OnInit {
     this.signalrService.startConnection();
     this.signalrService.addStudentReceivedListener();
     this.signalrService.studentReceived.subscribe((student: any) => {
+      student.fadedIn = true;
       this.students.push(student);
     });
   }
