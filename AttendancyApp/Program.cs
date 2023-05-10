@@ -1,9 +1,15 @@
+using AttendancyApp.Context;
 using AttendancyApp.HubConfig;
-
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
+builder.Services.AddDbContext<AppDbContext>(option =>
+{
+    option.UseSqlServer(builder.Configuration.GetConnectionString("SqlServerConnStr"));
+});
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddSignalR(options =>

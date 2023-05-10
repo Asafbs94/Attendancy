@@ -6,12 +6,18 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { ReportComponent } from './report/report.component';
 import { AttendanceComponent } from './attendance/attendance.component';
 import { SettingsComponent } from './settings/settings.component';
+import { LoginComponent } from './components/login/login.component';
+import { SignupComponent } from './components/signup/signup.component';
+
 const routes: Routes = [
-  { path: '', component: DashboardComponent },
-  { path: 'location', component: LocationSenderComponent ,pathMatch:"full"},
-  { path: 'report', component: ReportComponent ,pathMatch:"full"},
-  { path: 'attendance', component: AttendanceComponent ,pathMatch:"full"},
-  { path: 'setting', component: SettingsComponent ,pathMatch:"full"}
+  { path: '', redirectTo: "/login", pathMatch: 'full' },
+  { path: 'login', component: LoginComponent },
+  { path: 'signup', component: SignupComponent },
+  { path: 'dashboard', component: DashboardComponent },
+  { path: 'location', component: LocationSenderComponent, pathMatch: "full" },
+  { path: 'report', component: ReportComponent, pathMatch: "full" },
+  { path: 'attendance', component: AttendanceComponent, pathMatch: "full" },
+  { path: 'setting', component: SettingsComponent, pathMatch: "full" }
 ];
 
 @NgModule({
