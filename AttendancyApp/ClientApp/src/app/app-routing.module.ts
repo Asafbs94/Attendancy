@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AppComponent } from './app.component';
-import { LocationSenderComponent } from './location-sender/location-sender.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
-import { ReportComponent } from './report/report.component';
-import { AttendanceComponent } from './attendance/attendance.component';
-import { SettingsComponent } from './settings/settings.component';
+import { LocationSenderComponent } from './components/location-sender/location-sender.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { ReportComponent } from './components/report/report.component';
+import { AttendanceComponent } from './components/attendance/attendance.component';
+import { SettingsComponent } from './components/settings/settings.component';
 import { LoginComponent } from './components/login/login.component';
 import { SignupComponent } from './components/signup/signup.component';
 
