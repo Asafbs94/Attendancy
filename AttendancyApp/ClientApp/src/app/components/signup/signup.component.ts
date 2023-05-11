@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import ValidateForm from 'src/app/helpers/validateform';
 import { AuthService } from 'src/app/services/auth.service';
 
@@ -11,40 +12,45 @@ import { AuthService } from 'src/app/services/auth.service';
 export class SignupComponent implements OnInit {
 
   type: string = "password";
-  isText: boolean = false;
+  showPassword: boolean = false;
   eyeIcon: string = "fa-eye-slash";
   signUpForm: FormGroup;
 
 
-  constructor(private fb: FormBuilder, private auth: AuthService) { }
+  constructor(private fb: FormBuilder, private auth: AuthService, private router: Router) { }
 
   ngOnInit(): void {
     this.signUpForm = this.fb.group({
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
       userName: ['', Validators.required],
-      email: ['', Validators.required, Validators.email],
-      password: ['', Validators.required]
+      password: ['', Validators.compose([
+        Validators.required,
+        Validators.minLength(8), // minimum length of 8 characters
+        Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/), // at least one uppercase, lowercase, digit, and special character
+      ])]
     })
   }
 
 
-  hideShowPass() {
-    this.isText = !this.isText;
-    this.isText ? this.eyeIcon = "fa-eye" : this.eyeIcon = "fa-eye-slash";
-    this.isText ? this.type = "text" : this.type = "password";
+  hideShowPassword() {
+    this.showPassword = !this.showPassword;
+    this.showPassword ? this.eyeIcon = "fa-eye" : this.eyeIcon = "fa-eye-slash";
+    this.showPassword ? this.type = "text" : this.type = "password";
   }
 
   OnSignUp() {
     if (this.signUpForm.valid) {
-      console.log(this.signUpForm.value);
       this.auth.signUp(this.signUpForm.value)
         .subscribe({
           next: (res) => {
-            alert(res.message)
+            // alert(res.message);
+            this.signUpForm.reset();
+            this.router.navigate(['dashboard'])
           },
           error: (err) => {
-            alert(err?.error.message)
+            alert(err?.error.message);
           }
         })
     }

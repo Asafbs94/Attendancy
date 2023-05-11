@@ -7,8 +7,9 @@ const PROXY_CONFIG = [
   {
     context: [
       "/qrcode",
-      "/toastr"
-   ],
+      "/toastr",
+      "/api/User"
+    ],
     target: target,
     secure: false,
     headers: {

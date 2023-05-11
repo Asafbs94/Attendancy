@@ -46,6 +46,7 @@ app.MapControllerRoute(
 app.MapFallbackToFile("index.html");
 
 app.UseCors("AllowAllHeaders");
+
 app.UseEndpoints(endpoints =>
 {
     endpoints.MapControllers();

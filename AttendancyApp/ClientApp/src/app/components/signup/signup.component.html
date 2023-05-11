@@ -32,8 +32,20 @@
 
                             <div class="form-group pt-3">
                                 <div class="input-field"
-                                    [class.error]="signUpForm.controls['userName'].dirty && signUpForm.hasError('required','userName')">
+                                    [class.error]="signUpForm.controls['email'].dirty && signUpForm.hasError('required','email')">
                                     <span class="fa fa-envelope p-2"></span>
+                                    <input formControlName="email" type="text" placeholder="Email">
+                                </div>
+                            </div>
+                            <small *ngIf="signUpForm.controls['email'].dirty && signUpForm.hasError('required','email')"
+                                class="text-danger">*Email is required</small>
+                            <small *ngIf="signUpForm.controls['email'].dirty && signUpForm.hasError('email','email')"
+                                class="text-danger">*Email format is incorrect</small>
+
+                            <div class="form-group pt-3">
+                                <div class="input-field"
+                                    [class.error]="signUpForm.controls['userName'].dirty && signUpForm.hasError('required','userName')">
+                                    <span class="fa fa-user p-2"></span>
                                     <input formControlName="userName" type="text" placeholder="Username">
                                 </div>
                             </div>
@@ -41,27 +53,27 @@
                                 *ngIf="signUpForm.controls['userName'].dirty && signUpForm.hasError('required','userName')"
                                 class="text-danger">*Username is required</small>
 
-                            <div class="form-group pt-3">
-                                <div class="input-field"
-                                    [class.error]="signUpForm.controls['email'].dirty && signUpForm.hasError('required','email')">
-                                    <span class="fa fa-user p-2"></span>
-                                    <input formControlName="email" type="text" placeholder="Email">
-                                </div>
-                            </div>
-                            <small *ngIf="signUpForm.controls['email'].dirty && signUpForm.hasError('required','email')"
-                                class="text-danger">*Email is required</small>
+
 
                             <div class="form-group pt-3">
                                 <div class="input-field"
                                     [class.error]="signUpForm.controls['password'].dirty && signUpForm.hasError('required','password')">
                                     <span class="fa fa-lock p-2"></span>
                                     <input formControlName="password" [type]="type" placeholder="New password">
-                                    <span (click)="hideShowPass()" class="fa {{eyeIcon}}"></span>
+                                    <span (click)="hideShowPassword()" class="fa {{eyeIcon}}"></span>
                                 </div>
                             </div>
                             <small
                                 *ngIf="signUpForm.controls['password'].dirty && signUpForm.hasError('required','password')"
                                 class="text-danger">*Password is required</small>
+
+                            <small *ngIf="signUpForm.controls['password'].dirty && (signUpForm.hasError('minlength','password') 
+                                || signUpForm.hasError('pattern','password'))" class="text-danger">
+                                *Password must contain at least 8 characters - at least one uppercase, lowercase, digit,
+                                and special character.<br>Special characters:
+                                &#47;&#94;&#36;()&#91;&#93;&#123;&#125;&#43;&#42;&#63;&#124;&#45;
+                                <!-- /^$().[]{}+*?|-\ -->
+                            </small>
 
                             <button (click)="OnSignUp()" type="submit" class="btn btn-primary btn-block mt-4 w-100">
                                 Sign up</button>

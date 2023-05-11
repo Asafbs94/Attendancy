@@ -24,18 +24,29 @@
                                     [class.error]="loginForm.controls['password'].dirty && loginForm.hasError('required','password')">
                                     <span class="fa fa-lock p-2"></span>
                                     <input formControlName="password" [type]="type" placeholder="Password">
-                                    <span (click)="hideShowPass()" class="fa {{eyeIcon}}"></span>
+                                    <span (click)="hideShowPassword()" class="fa {{eyeIcon}}"></span>
                                 </div>
                             </div>
                             <small
                                 *ngIf="loginForm.controls['password'].dirty && loginForm.hasError('required','password')"
                                 class="text-danger">*Password is required</small>
 
+                            <small *ngIf="loginForm.controls['password'].dirty && (loginForm.hasError('minlength','password') 
+                                || loginForm.hasError('pattern','password'))" class="text-danger">
+                                *Password must contain at least 8 characters - at least one uppercase, lowercase, digit,
+                                and special character.
+                                <br>Special characters:
+                                &#47;&#94;&#36;()&#91;&#93;&#123;&#125;&#43;&#42;&#63;&#124;&#45;
+                                <!-- /^$().[]{}+*?|-\ -->
+                            </small>
+
+
                             <div class="form-inline fr mt-4">
                                 <a id="forget" class="font-weight-bold">Forget Password?</a>
                             </div>
                             <button (click)="OnLogin()" type="submit"
                                 class="btn btn-primary btn-block mt-4 w-100">Login</button>
+
                             <div class="text-center pt-4 text-muted">Don't have account? <a id="forget"
                                     href="/signup">Sign Up</a></div>
                         </form>

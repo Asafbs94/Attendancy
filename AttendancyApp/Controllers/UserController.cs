@@ -3,6 +3,7 @@ using AttendancyApp.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System;
 
 namespace AttendancyApp.Controllers
 {
@@ -39,6 +40,9 @@ namespace AttendancyApp.Controllers
         {
             if (userObj == null)
                 return BadRequest();
+
+            userObj.Token = Guid.NewGuid().ToString();
+            userObj.Rule = "r";
 
             await _authContext.Users.AddAsync(userObj).ConfigureAwait(false);
             await _authContext.SaveChangesAsync().ConfigureAwait(false);
