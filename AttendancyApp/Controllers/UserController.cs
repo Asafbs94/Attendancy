@@ -24,16 +24,27 @@ namespace AttendancyApp.Controllers
         [HttpPost("authenticate")]
         public async Task<IActionResult> AuthenticateAsync([FromBody] UserModel userObj)
         {
-            if (userObj == null)
+            // All usernames saving in database as lowercase - to avoid duplication usernames with uppercase.
+            var userName = userObj.UserName.ToLower(); 
+            var password = userObj.Password;
+
+            if (userObj == null || string.IsNullOrEmpty(userName) || string.IsNullOrEmpty(password))
                 return BadRequest();
 
+            // Get the user from database according to its username.
             var user = await _authContext
                             .Users
-                            .FirstOrDefaultAsync(u => u.UserName == userObj.UserName && u.Password == userObj.Password)
+                            .FirstOrDefaultAsync(u => u.UserName == userObj.UserName)
                             .ConfigureAwait(false);
 
             if (user == null)
                 return NotFound(new { Message = "User not found!" });
+
+            // Checking if the password we got from the user is the correct one.
+            var hashPassword = user.Password; // User hash password from the database.
+            if (!PasswordHasher.VerifyPassword(password, hashPassword))
+                // Not exposing to the user that the password is incorrect, In order not to reveal that there is a user with this username.
+                return BadRequest(new { Message = "The username or password is invalid." });
 
             return Ok(new { Message = "Login Success!" });
         }
@@ -65,6 +76,8 @@ namespace AttendancyApp.Controllers
             if (!string.IsNullOrEmpty(passError))
                 return BadRequest(new { Message = passError });
 
+            // All usernames saving in database as lowercase - to avoid duplication usernames with uppercase.
+            userObj.UserName = userObj.UserName.ToLower(); 
             userObj.Password = PasswordHasher.HashPassword(password);
             userObj.Rule = "User";
             userObj.Token = Guid.NewGuid().ToString();
