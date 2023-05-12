@@ -31,14 +31,14 @@
                                 *ngIf="loginForm.controls['password'].dirty && loginForm.hasError('required','password')"
                                 class="text-danger">*Password is required</small>
 
-                            <small *ngIf="loginForm.controls['password'].dirty && (loginForm.hasError('minlength','password') 
+                            <!-- <small *ngIf="loginForm.controls['password'].dirty && (loginForm.hasError('minlength','password') 
                                 || loginForm.hasError('pattern','password'))" class="text-danger">
                                 *Password must contain at least 8 characters - at least one uppercase, lowercase, digit,
                                 and special character.
                                 <br>Special characters:
                                 &#47;&#94;&#36;()&#91;&#93;&#123;&#125;&#43;&#42;&#63;&#124;&#45;
-                                <!-- /^$().[]{}+*?|-\ -->
-                            </small>
+                                /^$().[]{}+*?|-\
+                            </small> -->
 
 
                             <div class="form-inline fr mt-4">
