@@ -24,8 +24,8 @@ namespace AttendancyApp.Controllers
         [HttpPost("authenticate")]
         public async Task<IActionResult> AuthenticateAsync([FromBody] UserModel userObj)
         {
-
-            var userName = userObj.UserName;
+            // All usernames saving in database as lowercase - to avoid duplication usernames with uppercase.
+            var userName = userObj.UserName.ToLower(); 
             var password = userObj.Password;
 
             if (userObj == null || string.IsNullOrEmpty(userName) || string.IsNullOrEmpty(password))
@@ -76,6 +76,8 @@ namespace AttendancyApp.Controllers
             if (!string.IsNullOrEmpty(passError))
                 return BadRequest(new { Message = passError });
 
+            // All usernames saving in database as lowercase - to avoid duplication usernames with uppercase.
+            userObj.UserName = userObj.UserName.ToLower(); 
             userObj.Password = PasswordHasher.HashPassword(password);
             userObj.Rule = "User";
             userObj.Token = Guid.NewGuid().ToString();
