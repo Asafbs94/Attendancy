@@ -14,7 +14,7 @@ import { SettingsComponent } from './components/settings/settings.component';
 import { ToastrModule } from 'ngx-toastr';
 import { LoginComponent } from './components/login/login.component';
 import { SignupComponent } from './components/signup/signup.component';
-
+import { EventFormComponent } from './components/event-form/event-form.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -25,6 +25,7 @@ import { SignupComponent } from './components/signup/signup.component';
     AttendanceComponent,
     SettingsComponent,
     LoginComponent,
+    EventFormComponent,
     SignupComponent
 
   ],

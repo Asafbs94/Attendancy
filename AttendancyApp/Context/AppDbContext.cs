@@ -11,6 +11,7 @@ namespace AttendancyApp.Context
         }
 
         public DbSet<UserModel> Users { get; set; }
+        public DbSet<EventModel> Events { get; set; }
 
         /// <summary>
         /// Send the entity to the the "users" table in the DataBase.
@@ -19,6 +20,7 @@ namespace AttendancyApp.Context
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<UserModel>().ToTable("users");
+            modelBuilder.Entity<EventModel>().ToTable("Events");
         }
     }
 }
