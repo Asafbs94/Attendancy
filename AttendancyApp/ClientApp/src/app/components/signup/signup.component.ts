@@ -53,7 +53,7 @@ export class SignupComponent implements OnInit {
             this.router.navigate(['dashboard'])
           },
           error: (err) => {
-            this.toast.error({ detail: "ERROR", summary: err.message, duration: 10000 });
+            this.toast.error({ detail: "ERROR", summary: err?.error.message, duration: 5000 });
           }
         })
     }
