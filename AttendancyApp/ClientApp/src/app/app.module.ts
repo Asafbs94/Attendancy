@@ -1,17 +1,19 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
-import { LocationSenderComponent } from './location-sender/location-sender.component';
+import { LocationSenderComponent } from './components/location-sender/location-sender.component';
 import { AppRoutingModule } from './app-routing.module';
-import { DashboardComponent } from './dashboard/dashboard.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { SignalrService } from './signalr.service';
-import { ReportComponent } from './report/report.component';
-import { NavbarComponent } from './navbar/navbar.component';
-import { AttendanceComponent } from './attendance/attendance.component';
-import { SettingsComponent } from './settings/settings.component';
+import { ReportComponent } from './components/report/report.component';
+import { NavbarComponent } from './components/navbar/navbar.component';
+import { AttendanceComponent } from './components/attendance/attendance.component';
+import { SettingsComponent } from './components/settings/settings.component';
 import { ToastrModule } from 'ngx-toastr';
+import { LoginComponent } from './components/login/login.component';
+import { SignupComponent } from './components/signup/signup.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +24,8 @@ import { ToastrModule } from 'ngx-toastr';
     NavbarComponent,
     AttendanceComponent,
     SettingsComponent,
+    LoginComponent,
+    SignupComponent
 
   ],
   imports: [
@@ -29,6 +33,7 @@ import { ToastrModule } from 'ngx-toastr';
     HttpClientModule,
     FormsModule,
     AppRoutingModule,
+    ReactiveFormsModule,
     ToastrModule.forRoot(),
 
   ],

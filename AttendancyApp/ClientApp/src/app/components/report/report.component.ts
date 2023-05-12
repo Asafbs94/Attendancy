@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { SignalrService } from '../signalr.service';
+import { SignalrService } from '../../signalr.service';
 @Component({
   selector: 'app-report',
   templateUrl: './report.component.html',
@@ -8,7 +8,7 @@ import { SignalrService } from '../signalr.service';
 export class ReportComponent implements OnInit {
 
 
-  constructor( ) { }
+  constructor() { }
   ngOnInit(): void {
   }
 

@@ -1,0 +1,69 @@
+<div class="outer">
+    <div class="container">
+        <div class="row">
+            <div class="offset-md-2 col-lg-5 col-md-7 offset-lg-4 offset-md-3">
+                <div class="panel border bg-white">
+                    <div class="panel-heading">
+                        <h3 class="pt-3 font-weight-bold">Login</h3>
+                    </div>
+                    <div class="panel-body p-3">
+                        <form [formGroup]="loginForm">
+                            <div class="form-group pt-3">
+                                <div class="input-field"
+                                    [class.error]="loginForm.controls['username'].dirty && loginForm.hasError('required','username')">
+                                    <span class="fa fa-user p-2"></span>
+                                    <input formControlName="username" type="text" placeholder="Username">
+                                </div>
+                            </div>
+                            <small
+                                *ngIf="loginForm.controls['username'].dirty && loginForm.hasError('required','username')"
+                                class="text-danger">*Username is required</small>
+
+                            <div class="form-group pt-3">
+                                <div class="input-field"
+                                    [class.error]="loginForm.controls['password'].dirty && loginForm.hasError('required','password')">
+                                    <span class="fa fa-lock p-2"></span>
+                                    <input formControlName="password" [type]="type" placeholder="Password">
+                                    <span (click)="hideShowPassword()" class="fa {{eyeIcon}}"></span>
+                                </div>
+                            </div>
+                            <small
+                                *ngIf="loginForm.controls['password'].dirty && loginForm.hasError('required','password')"
+                                class="text-danger">*Password is required</small>
+
+                            <!-- <small *ngIf="loginForm.controls['password'].dirty && (loginForm.hasError('minlength','password') 
+                                || loginForm.hasError('pattern','password'))" class="text-danger">
+                                *Password must contain at least 8 characters - at least one uppercase, lowercase, digit,
+                                and special character.
+                                <br>Special characters:
+                                &#47;&#94;&#36;()&#91;&#93;&#123;&#125;&#43;&#42;&#63;&#124;&#45;
+                                /^$().[]{}+*?|-\
+                            </small> -->
+
+
+                            <div class="form-inline fr mt-4">
+                                <a id="forget" class="font-weight-bold">Forget Password?</a>
+                            </div>
+                            <button (click)="OnLogin()" type="submit"
+                                class="btn btn-primary btn-block mt-4 w-100">Login</button>
+
+                            <div class="text-center pt-4 text-muted">Don't have account? <a id="forget"
+                                    href="/signup">Sign Up</a></div>
+                        </form>
+                    </div>
+                    <!-- <div class="mx-3 my-2 py-2 bordert">
+                        <div class="text-center py-3">
+                            <a href="https://www.google.com" target="_blank" class="px-2"> <img
+                                    src="https://www.freepnglogos.com/uploads/google-logo-png/google-logo-png-google-icon-logo-png-transparent-svg-vector-bie-supply-14.png"
+                                    alt=""></a>
+                            <a href="https://www.google.com" target="_blank" class="px-2"> <img
+                                    src="https://www.freepnglogos.com/uploads/facebook-logo-icon/facebook-logo-icon-facebook-icon-png-images-icons-and-png-backgrounds-1.png"
+                                    alt=""></a>
+
+                        </div>
+                    </div> -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -13,10 +13,10 @@ import { Router } from '@angular/router';
 export class DashboardComponent implements OnInit {
   qrCodeData: string;
   uniqueCode: string;
-  title:string;
+  title: string;
   gpsLocation: any;
   employees = [];
-  constructor(private http: HttpClient,private route: ActivatedRoute,private router: Router) {
+  constructor(private http: HttpClient, private route: ActivatedRoute, private router: Router) {
     this.uniqueCode = this.generateUniqueCode();
   }
 
