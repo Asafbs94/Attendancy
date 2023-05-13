@@ -8,9 +8,11 @@ import { AttendanceComponent } from './components/attendance/attendance.componen
 import { SettingsComponent } from './components/settings/settings.component';
 import { LoginComponent } from './components/login/login.component';
 import { SignupComponent } from './components/signup/signup.component';
+import { EventFormComponent } from './components/event-form/event-form.component';
 
 const routes: Routes = [
   { path: '', redirectTo: "/login", pathMatch: 'full' },
+  { path: 'eventCreation', component: EventFormComponent, pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignupComponent },
   { path: 'dashboard', component: DashboardComponent },
