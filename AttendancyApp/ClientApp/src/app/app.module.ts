@@ -15,6 +15,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { LoginComponent } from './components/login/login.component';
 import { SignupComponent } from './components/signup/signup.component';
 import { EventFormComponent } from './components/event-form/event-form.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -25,9 +26,8 @@ import { EventFormComponent } from './components/event-form/event-form.component
     AttendanceComponent,
     SettingsComponent,
     LoginComponent,
-    EventFormComponent,
-    SignupComponent
-
+    SignupComponent,
+    EventFormComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -35,8 +35,7 @@ import { EventFormComponent } from './components/event-form/event-form.component
     FormsModule,
     AppRoutingModule,
     ReactiveFormsModule,
-    NgToastModule,
-    ToastrModule.forRoot(),
+    ToastrModule.forRoot()
   ],
   providers: [SignalrService],
   bootstrap: [AppComponent]
