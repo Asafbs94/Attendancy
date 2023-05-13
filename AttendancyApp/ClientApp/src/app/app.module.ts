@@ -35,8 +35,8 @@ import { EventFormComponent } from './components/event-form/event-form.component
     FormsModule,
     AppRoutingModule,
     ReactiveFormsModule,
+    NgToastModule,
     ToastrModule.forRoot(),
-
   ],
   providers: [SignalrService],
   bootstrap: [AppComponent]
