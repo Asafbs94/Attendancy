@@ -24,7 +24,7 @@ export class AuthService {
   }
 
   storeToken(tokenValue: string) {
-    localStorage.setItem('token', tokenValue)
+    localStorage.setItem('token', tokenValue);
   }
 
   getToken() {
@@ -32,6 +32,6 @@ export class AuthService {
   }
 
   isLoggedIn(): boolean {
-    return !!localStorage.getItem('token') // the !! means that if there is token string it will return true otherwise false. 
+    return !!localStorage.getItem('token'); // the !! means that if there is token string it will return true otherwise false. 
   }
 }
