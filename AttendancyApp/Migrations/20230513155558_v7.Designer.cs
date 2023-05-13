@@ -4,6 +4,7 @@ using AttendancyApp.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AttendancyApp.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230513155558_v7")]
+    partial class v7
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -73,14 +76,14 @@ namespace AttendancyApp.Migrations
                     b.Property<int?>("EventModelId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("ParticipantId")
-                        .HasColumnType("int");
+                    b.Property<string>("ParticipantId")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("EventModelId");
 
-                    b.ToTable("Participants");
+                    b.ToTable("ParticipantModel");
                 });
 
             modelBuilder.Entity("AttendancyApp.Models.UserModel", b =>
