@@ -4,8 +4,11 @@ using AttendancyApp.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using System;
+using System.IdentityModel.Tokens.Jwt;
 using System.Net.Mail;
+using System.Security.Claims;
 using System.Text;
 using System.Text.RegularExpressions;
 
@@ -46,7 +49,13 @@ namespace AttendancyApp.Controllers
                 // Not exposing to the user that the password is incorrect, In order not to reveal that there is a user with this username.
                 return BadRequest(new { Message = "The username or password is invalid." });
 
-            return Ok(new { Message = "Login Success!" });
+            user.Token = CreateJwt(user);
+
+            return Ok(new 
+            { 
+                Token = user.Token, 
+                Message = "Login Success!" 
+            });
         }
 
         [HttpPost("register")]
@@ -80,7 +89,7 @@ namespace AttendancyApp.Controllers
             userObj.UserName = userObj.UserName.ToLower(); 
             userObj.Password = PasswordHasher.HashPassword(password);
             userObj.Rule = "User";
-            userObj.Token = Guid.NewGuid().ToString();
+            userObj.Token = "";
 
             await _authContext.Users.AddAsync(userObj).ConfigureAwait(false);
             await _authContext.SaveChangesAsync().ConfigureAwait(false);
@@ -124,6 +133,30 @@ namespace AttendancyApp.Controllers
                 sb.Append("Password should contain special characters: <>!@#$%^&*()_+\\-=[]{};':\"|./?`~" + Environment.NewLine);
 
             return sb.ToString();
+        }
+
+        private string CreateJwt(UserModel user)
+        {
+            var jwtTokenHandler = new JwtSecurityTokenHandler();
+            var key = Encoding.ASCII.GetBytes("veryverysecret.....");
+            var identity = new ClaimsIdentity(new Claim[]
+            {
+                new Claim(ClaimTypes.Role, user.Rule),
+                new Claim(ClaimTypes.Name, $"{user.FirstName} {user.LastName}"),
+
+            });
+
+            var credentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256);
+
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Subject = identity,
+                Expires = DateTime.Now.AddDays(7),
+                SigningCredentials = credentials
+            };
+
+            var token = jwtTokenHandler.CreateToken(tokenDescriptor);
+            return jwtTokenHandler.WriteToken(token);
         }
     }
 }

@@ -50,7 +50,7 @@ export class SignupComponent implements OnInit {
           next: (res) => {
             this.toast.success({ detail: "SUCCESS", summary: res.message, duration: 2000 });
             this.signUpForm.reset();
-            this.router.navigate(['dashboard'])
+            this.router.navigate(['login'])
           },
           error: (err) => {
             this.toast.error({ detail: "ERROR", summary: err?.error.message, duration: 5000 });
