@@ -69,7 +69,7 @@ namespace AttendancyApp.Controllers
 
             // Check username
             if (await CheckUserNameExistAsync(userName).ConfigureAwait(false))
-                return BadRequest(new { Message  = "Username already exists, try another name"});
+                return BadRequest(new { Message  = "Username already taken, try another name"});
 
             // Check password strength
             var passError = CheckPasswordStrength(password);
