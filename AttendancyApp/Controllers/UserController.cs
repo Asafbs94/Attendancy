@@ -88,7 +88,7 @@ namespace AttendancyApp.Controllers
             // All usernames saving in database as lowercase - to avoid duplication usernames with uppercase.
             userObj.UserName = userObj.UserName.ToLower(); 
             userObj.Password = PasswordHasher.HashPassword(password);
-            userObj.Rule = "User";
+            userObj.Role = "User";
             userObj.Token = "";
 
             await _authContext.Users.AddAsync(userObj).ConfigureAwait(false);
@@ -141,7 +141,7 @@ namespace AttendancyApp.Controllers
             var key = Encoding.ASCII.GetBytes("veryverysecret.....");
             var identity = new ClaimsIdentity(new Claim[]
             {
-                new Claim(ClaimTypes.Role, user.Rule),
+                new Claim(ClaimTypes.Role, user.Role),
                 new Claim(ClaimTypes.Name, $"{user.FirstName} {user.LastName}"),
 
             });
