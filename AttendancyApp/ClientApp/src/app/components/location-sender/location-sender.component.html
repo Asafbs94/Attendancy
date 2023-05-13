@@ -1,1 +1,10 @@
-<p>Please Allow location sharing!</p>
+<div *ngIf="!isSent">
+  <label for="id">ID Number or Email:</label>
+  <input type="text" id="id" [(ngModel)]="id" placeholder="Enter ID or Email">
+
+  <button (click)="sendInformation()">Send</button>
+</div>
+
+<div *ngIf="isSent">
+  <p>Thanks for registration!</p>
+</div>

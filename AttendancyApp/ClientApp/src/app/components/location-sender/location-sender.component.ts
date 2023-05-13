@@ -7,26 +7,55 @@ import { SignalrService } from '../../signalr.service';
   templateUrl: './location-sender.component.html'
 })
 export class LocationSenderComponent implements OnInit {
+  id: string;
+  email: string;
+  isSent: boolean = false;
 
   constructor(private http: HttpClient, public signalrService: SignalrService) {
     this.signalrService.startConnection();
   }
 
   ngOnInit(): void {
-    // Get the current location
-    navigator.geolocation.getCurrentPosition((position) => {
-      var lat: number = position.coords.latitude;
-      const lng: number = position.coords.longitude;
-      const StudentID: string = "312391774";
-      console.log(lat)
-      console.log(lng)
-      // Make an HTTP request to the server with the current location
-      this.http.post('qrcode', { StudentID, lat, lng }).subscribe();
-      // this.http.get('qrcode').subscribe((response) => {
-      //   const jsonData = response;
-      //   console.log(jsonData);
-      // });
-    });
+  }
+
+  sendInformation(): void {
+    // Check if ID or email is provided
+    const isIdProvided: boolean = !!this.id;
+    const isEmailProvided: boolean = !!this.email;
+
+    if (isIdProvided || isEmailProvided) {
+      // Get the current location
+      navigator.geolocation.getCurrentPosition((position) => {
+        const lat: number = position.coords.latitude;
+        const lng: number = position.coords.longitude;
+
+        // Get the URL path
+        const urlPath: string = window.location.pathname;
+
+        // Extract the part of the URL path after "/location/"
+        const guid: string = urlPath.split('/location/')[1];
+
+        // Prepare the data object for the HTTP request
+        const data: any = {
+          lat,
+          lng,
+          guid
+        };
+
+        if (isIdProvided) {
+          data.id = this.id;
+        }
+
+        if (isEmailProvided) {
+          data.email = this.email;
+        }
+
+        // Make an HTTP request to the server with the current location and user data
+        this.http.post('qrcode', data).subscribe(() => {
+          this.isSent = true; // Set isSent flag to true
+        });
+      });
+    }
   }
 
 }

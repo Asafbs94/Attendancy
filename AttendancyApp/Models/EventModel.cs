@@ -13,7 +13,7 @@ namespace AttendancyApp.Models
         public string? EventDescription { get; set; }
         public string? EventLocation { get; set; }
 
-        public virtual ICollection<UserModel>? Participants { get; set; }
+        public virtual ICollection<ParticipantModel>? Participants { get; set; }
         public virtual UserModel? Creator { get; set; }
     }
 

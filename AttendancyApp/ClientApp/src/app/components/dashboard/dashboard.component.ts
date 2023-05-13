@@ -1,9 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import * as QRCode from 'qrcode';
-import { style } from '@angular/animations';
-import { ActivatedRoute } from '@angular/router';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
@@ -11,32 +8,49 @@ import { Router } from '@angular/router';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
-  qrCodeData: string;
-  uniqueCode: string;
-  title: string;
-  gpsLocation: any;
-  employees = [];
-  constructor(private http: HttpClient, private route: ActivatedRoute, private router: Router) {
-    this.uniqueCode = this.generateUniqueCode();
+  qrCodeData: string = '';
+  selectedDate: string = '';
+  events: any[] = [];
+
+  constructor(private http: HttpClient) {
   }
 
   ngOnInit() {
-    this.title = "Computer science 101"
-    this.generateQRCode(this.uniqueCode);
+    this.getEvents();
   }
 
   generateUniqueCode(): string {
-    // Here should be an endpoint with Student ID
-    let baseUrl = new URL(window.location.href);
-    let endpoint = `${baseUrl.origin}/location`;
-    console.log(endpoint);
-    return endpoint;
+    const selectedEvent = this.events.find(event => event.EventName === this.selectedDate);
+    if (selectedEvent) {
+      const guid = selectedEvent.Event.Guid;
+      return `${window.location.origin}/location/${guid}`;
+    }
+    return '';
   }
 
-  generateQRCode(data: string) {
-    QRCode.toDataURL(data, (err, url) => {
-      this.qrCodeData = url;
-    });
+  generateQRCode() {
+    const uniqueCode = this.generateUniqueCode();
+    if (uniqueCode) {
+      QRCode.toDataURL(uniqueCode, (err, url) => {
+        if (err) {
+          console.error(err);
+          return;
+        }
+        this.qrCodeData = url;
+      });
+    } else {
+      this.qrCodeData = '';
+    }
+  }
 
+  getEvents() {
+    this.http.get<Event[]>('/api/events').subscribe(
+      response => {
+        this.events = response;
+      },
+      error => {
+        console.error(error);
+      }
+    );
   }
 }
