@@ -15,7 +15,7 @@
       <h5 style="text-align: center;">Please select an event:</h5>
       <div class="date-selector" style="text-align: center;">
         <select id="dateDropdown" [(ngModel)]="selectedDate" (change)="generateQRCode()">
-          <option *ngFor="let event of events" [value]="event.EventName">{{ event.EventName }}</option>
+          <option *ngFor="let e of events" [value]="e.eventName">{{ e.eventName }}</option>
         </select>
       </div>
       <h5 style="text-align: center;">Please scan the QR code below to apply your attendance</h5>

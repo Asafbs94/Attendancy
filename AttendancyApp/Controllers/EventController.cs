@@ -21,10 +21,17 @@ namespace AttendancyApp.Controllers
             _dbContext = dbContext;
         }
 
-        [HttpGet("{eventName}")]
-        public IActionResult GetEvent(string eventName)
+        [HttpGet("{UserName}")]
+        public IActionResult GetEvent(string UserName)
         {
-            var eventModel = _dbContext.Events.FirstOrDefault(e => e.EventName.Equals(eventName, StringComparison.OrdinalIgnoreCase));
+            var events = _dbContext.Events.Include("Creator").Where(u => u.Creator.UserName.ToLower() == UserName.ToLower()).ToList();
+            return Ok(events);
+        }
+
+        [HttpGet]
+        public IActionResult Get()
+        {
+            var eventModel = _dbContext.Events.ToList();
 
             if (eventModel == null)
             {
@@ -33,6 +40,7 @@ namespace AttendancyApp.Controllers
 
             return Ok(eventModel);
         }
+
 
         [HttpPost]
         public async Task<IActionResult> CreateEvent([FromBody] EventDto eventModel)

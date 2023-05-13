@@ -1,10 +1,13 @@
-<div *ngIf="!isSent">
-  <label for="id">ID Number or Email:</label>
-  <input type="text" id="id" [(ngModel)]="id" placeholder="Enter ID or Email">
-
-  <button (click)="sendInformation()">Send</button>
+<div style="display: flex; justify-content: center; align-items: center; height: 100vh; position: absolute; top: 0; left: 0; right: 0;" *ngIf="!isSent">
+  <div style="text-align: center; max-width: 400px; padding: 0 20px; margin: 0 auto;">
+    <label for="id">ID Number or Email:</label>
+    <input type="text" id="id" [(ngModel)]="id" placeholder="Enter ID or Email">
+    <button (click)="sendInformation()">Send</button>
+  </div>
 </div>
 
-<div *ngIf="isSent">
-  <p>Thanks for registration!</p>
+<div style="display: flex; justify-content: center; align-items: center; height: 100vh; position: absolute; top: 0; left: 0; right: 0;" *ngIf="isSent">
+  <div style="text-align: center; max-width: 400px; padding: 0 20px; margin: 0 auto;">
+    <p>Thanks for registration!</p>
+  </div>
 </div>

@@ -7,8 +7,8 @@ import { SignalrService } from '../../signalr.service';
   templateUrl: './location-sender.component.html'
 })
 export class LocationSenderComponent implements OnInit {
-  id: string;
-  email: string;
+  id: Number = 0;
+  email: string = "";
   isSent: boolean = false;
 
   constructor(private http: HttpClient, public signalrService: SignalrService) {
@@ -23,7 +23,7 @@ export class LocationSenderComponent implements OnInit {
     const isIdProvided: boolean = !!this.id;
     const isEmailProvided: boolean = !!this.email;
 
-    if (isIdProvided || isEmailProvided) {
+    if (!this.isSent && (isIdProvided || isEmailProvided)) {
       // Get the current location
       navigator.geolocation.getCurrentPosition((position) => {
         const lat: number = position.coords.latitude;
@@ -49,7 +49,9 @@ export class LocationSenderComponent implements OnInit {
         if (isEmailProvided) {
           data.email = this.email;
         }
-        console.log(data)
+
+        console.log(data);
+
         // Make an HTTP request to the server with the current location and user data
         this.http.post('QrCode', data).subscribe(() => {
           this.isSent = true; // Set isSent flag to true
@@ -57,5 +59,4 @@ export class LocationSenderComponent implements OnInit {
       });
     }
   }
-
 }

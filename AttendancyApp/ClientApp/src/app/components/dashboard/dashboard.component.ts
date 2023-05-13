@@ -20,9 +20,9 @@ export class DashboardComponent implements OnInit {
   }
 
   generateUniqueCode(): string {
-    const selectedEvent = this.events.find(event => event.EventName === this.selectedDate);
+    const selectedEvent = this.events.find(e => e.eventName === this.selectedDate);
     if (selectedEvent) {
-      const guid = selectedEvent.Event.Guid;
+      const guid = selectedEvent.guid;
       return `${window.location.origin}/location/${guid}`;
     }
     return '';
@@ -44,7 +44,9 @@ export class DashboardComponent implements OnInit {
   }
 
   getEvents() {
-    this.http.get<Event[]>('/api/events').subscribe(
+    // TODO : make it predicate for current user
+    //var username = authservice.getUsername
+    this.http.get<Event[]>('/Event').subscribe(
       response => {
         this.events = response;
       },
