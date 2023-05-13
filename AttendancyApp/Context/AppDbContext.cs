@@ -12,6 +12,7 @@ namespace AttendancyApp.Context
 
         public DbSet<UserModel> Users { get; set; }
         public DbSet<EventModel> Events { get; set; }
+        public DbSet<ParticipantModel> Participants { get; set; }
 
         /// <summary>
         /// Send the entity to the the "users" table in the DataBase.

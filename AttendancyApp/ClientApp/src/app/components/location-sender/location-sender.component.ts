@@ -49,9 +49,9 @@ export class LocationSenderComponent implements OnInit {
         if (isEmailProvided) {
           data.email = this.email;
         }
-
+        console.log(data)
         // Make an HTTP request to the server with the current location and user data
-        this.http.post('qrcode', data).subscribe(() => {
+        this.http.post('QrCode', data).subscribe(() => {
           this.isSent = true; // Set isSent flag to true
         });
       });
