@@ -6,6 +6,7 @@ namespace AttendancyApp.Models
     {
         [Key]
         public int Id { get; set; }
+        public Guid Guid { get; set; }
         public string EventName { get; set; }
         public DateTime EventDate { get; set; }
         public TimeSpan EventTime { get; set; }

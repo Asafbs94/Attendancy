@@ -7,7 +7,6 @@ using AttendancyApp.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using Microsoft.SqlServer.Server;
 
 namespace AttendancyApp.Controllers
 {
@@ -22,8 +21,21 @@ namespace AttendancyApp.Controllers
             _dbContext = dbContext;
         }
 
+        [HttpGet("{eventName}")]
+        public IActionResult GetEvent(string eventName)
+        {
+            var eventModel = _dbContext.Events.FirstOrDefault(e => e.EventName.Equals(eventName, StringComparison.OrdinalIgnoreCase));
+
+            if (eventModel == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(eventModel);
+        }
+
         [HttpPost]
-        public async Task<IActionResult> CreateEvent([FromBody] EventDTO eventModel)
+        public async Task<IActionResult> CreateEvent([FromBody] EventDto eventModel)
         {
             if (!ModelState.IsValid)
             {
@@ -34,7 +46,8 @@ namespace AttendancyApp.Controllers
             var newEvent = new EventModel
             {
                 EventName = eventModel.EventName,
-                EventDate = eventModel.EventDate,
+                Guid = Guid.NewGuid(),
+                EventDate = DateTime.Parse(eventModel.EventDate),
                 EventTime = eventTime.TimeOfDay,
                 EventDescription = eventModel.EventDescription,
                 EventLocation = eventModel.EventLocation
@@ -43,24 +56,60 @@ namespace AttendancyApp.Controllers
             _dbContext.Events.Add(newEvent);
             await _dbContext.SaveChangesAsync();
 
-            return Ok(newEvent.Id);
+            return Ok(newEvent);
         }
 
-
-        [HttpGet]
-        public async Task<IActionResult> getEvent()
+        [HttpPut("{eventName}")]
+        public async Task<IActionResult> UpdateEvent(string eventName, [FromBody] EventDto eventModel)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
 
-            return Ok(3);
+            var existingEvent = await _dbContext.Events.FirstOrDefaultAsync(e => e.EventName.Equals(eventName, StringComparison.OrdinalIgnoreCase));
+
+            if (existingEvent == null)
+            {
+                return NotFound();
+            }
+
+            var eventTime = DateTime.ParseExact(eventModel.EventTime, "HH:mm", CultureInfo.InvariantCulture);
+
+            existingEvent.EventName = eventModel.EventName;
+            existingEvent.EventDate = DateTime.Parse(eventModel.EventDate);
+            existingEvent.EventTime = eventTime.TimeOfDay;
+            existingEvent.EventDescription = eventModel.EventDescription;
+            existingEvent.EventLocation = eventModel.EventLocation;
+
+            await _dbContext.SaveChangesAsync();
+
+            return Ok(existingEvent);
+        }
+
+        [HttpDelete("{eventName}")]
+        public async Task<IActionResult> DeleteEvent(string eventName)
+        {
+            var eventModel = await _dbContext.Events.FirstOrDefaultAsync(e => e.EventName.Equals(eventName, StringComparison.OrdinalIgnoreCase));
+
+            if (eventModel == null)
+            {
+                return NotFound();
+            }
+
+            _dbContext.Events.Remove(eventModel);
+            await _dbContext.SaveChangesAsync();
+
+            return NoContent();
         }
     }
-    public class EventDTO
+
+    public class EventDto
     {
         public string EventName { get; set; }
-        public DateTime EventDate { get; set; }
+        public string EventDate { get; set; }
         public string EventTime { get; set; }
         public string EventDescription { get; set; }
         public string EventLocation { get; set; }
     }
 }
-

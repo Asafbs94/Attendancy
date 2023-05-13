@@ -11,9 +11,10 @@ import { ReactiveFormsModule } from '@angular/forms';
 export class EventFormComponent {
   eventForm: FormGroup;
   @ViewChild('eventLocation') locationInput: ElementRef;
+  private baseUrl: string = "https://localhost:44431/Event";
+
   suggestions: string[] = [];
   constructor(
-
     private formBuilder: FormBuilder,
     private ngZone: NgZone,
     private httpClient: HttpClient
@@ -25,18 +26,30 @@ export class EventFormComponent {
       EventDescription: ['', Validators.required],
       EventLocation: ['', Validators.required],
     });
+
+    // Convert time input to string format
+    this.eventForm.get('EventTime')?.valueChanges.subscribe(value => {
+      if (value instanceof Date) {
+        const timeString = value.toTimeString().split(' ')[0];
+        this.eventForm.get('EventTime')?.setValue(timeString);
+      }
+    });
   }
 
-   onSubmit() {
-    if (this.eventForm.valid) {
-      const eventData = this.eventForm.value;
-      const eventDataJson = JSON.stringify(eventData); // Serialize eventData to JSON
-      console.log(eventDataJson);
-      let x = this.httpClient.get('Event/getEvent').subscribe();
-      console.log(x);
-      // Send eventDataJson to the endpoint using HttpClient or your preferred method
-      this.httpClient.post('Event/CreateEvent', eventDataJson).subscribe();
-    }
+
+  async onSubmit() {
+    const EventDto = this.eventForm.value;
+    console.log(EventDto);
+    this.httpClient.post<any>(`${this.baseUrl}`, EventDto).subscribe(
+      (response) => {
+        // Request was successful
+        alert('the Event was created successfuly!');
+      },
+      (error) => {
+        // Handle any errors that occurred during the request
+        console.error('An error occurred:', error);
+      }
+    );
   }
 
 
