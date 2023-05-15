@@ -1,11 +1,10 @@
-<router-outlet></router-outlet>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
   <meta charset="UTF-8" />
   <link rel="stylesheet" href="dashboard.component.css" />
-  <!-- Font Awesome Cdn Link -->
+  <!-- Font Awesome CDN Link -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
 </head>
 
@@ -13,20 +12,16 @@
   <div class="container">
     <app-navbar></app-navbar>
     <section class="main">
-      <div class="main-top" style="display: flex; justify-content: center; align-items: center;">
-        <h1 style="margin: 0;">{{title}}</h1>
+      <h5 style="text-align: center;">Please select an event:</h5>
+      <div class="date-selector" style="text-align: center;">
+        <select id="dateDropdown" [(ngModel)]="selectedDate" (change)="generateQRCode()">
+          <option *ngFor="let e of events" [value]="e.eventName">{{ e.eventName }}</option>
+        </select>
       </div>
-      <h2 style="display: flex; justify-content: center; align-items: center;">{{userFullName}}</h2>
-      <h5 style="text-align: center;">please scan QRcode below to apply your attendancy</h5>
-      <div class="qr-code-container" style="position: initial;  text-align: center;">
-        <img [src]="qrCodeData" alt="QR code" style="width: 500px;
-        width: 500px;
-        height: 500px;
-        display: block;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);;">
+      <h5 style="text-align: center;">Please scan the QR code below to apply your attendance</h5>
+      <div class="qr-code-container" style="text-align: center;">
+        <img *ngIf="qrCodeData" [src]="qrCodeData" alt="QR code"
+          style="width: 500px; height: 500px; display: block; margin: 0 auto;">
       </div>
     </section>
   </div>

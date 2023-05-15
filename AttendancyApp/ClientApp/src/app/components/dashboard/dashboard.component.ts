@@ -14,41 +14,59 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class DashboardComponent implements OnInit {
   public userFullName: string = "";
-  qrCodeData: string;
-  uniqueCode: string;
-  title: string;
-  gpsLocation: any;
-  employees = [];
+  qrCodeData: string = '';
+  selectedDate: string = '';
+  events: any[] = [];
+
   constructor(private http: HttpClient,
     private route: ActivatedRoute,
     private router: Router,
     private userStore: UserStoreService,
     private auth: AuthService) {
-    this.uniqueCode = this.generateUniqueCode();
   }
 
   ngOnInit() {
-    this.title = "Computer science 101"
-    this.generateQRCode(this.uniqueCode);
+    this.getEvents();
     this.userStore.getFullNameFromStore()
       .subscribe(val => {
         let fullNameFromToken = this.auth.getFullNameFromToken(); // When refresing the page the observable will be empty so it will take the name from the token.
         this.userFullName = val || fullNameFromToken;
       });
   }
-
   generateUniqueCode(): string {
-    // Here should be an endpoint with Student ID
-    let baseUrl = new URL(window.location.href);
-    let endpoint = `${baseUrl.origin}/location`;
-    console.log(endpoint);
-    return endpoint;
+    const selectedEvent = this.events.find(e => e.eventName === this.selectedDate);
+    if (selectedEvent) {
+      const guid = selectedEvent.guid;
+      return `${window.location.origin}/location/${guid}`;
+    }
+    return '';
   }
 
-  generateQRCode(data: string) {
-    QRCode.toDataURL(data, (err, url) => {
-      this.qrCodeData = url;
-    });
+  generateQRCode() {
+    const uniqueCode = this.generateUniqueCode();
+    if (uniqueCode) {
+      QRCode.toDataURL(uniqueCode, (err, url) => {
+        if (err) {
+          console.error(err);
+          return;
+        }
+        this.qrCodeData = url;
+      });
+    } else {
+      this.qrCodeData = '';
+    }
+  }
 
+  getEvents() {
+    // TODO : make it predicate for current user
+    //var username = authservice.getUsername
+    this.http.get<Event[]>('/Event').subscribe(
+      response => {
+        this.events = response;
+      },
+      error => {
+        console.error(error);
+      }
+    );
   }
 }

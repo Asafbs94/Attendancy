@@ -14,6 +14,7 @@ import { SettingsComponent } from './components/settings/settings.component';
 import { ToastrModule } from 'ngx-toastr';
 import { LoginComponent } from './components/login/login.component';
 import { SignupComponent } from './components/signup/signup.component';
+import { EventFormComponent } from './components/event-form/event-form.component';
 import { NgToastModule } from 'ng-angular-popup';
 import { TokenInterceptor } from './interseptors/token.interceptor';
 
@@ -27,8 +28,8 @@ import { TokenInterceptor } from './interseptors/token.interceptor';
     AttendanceComponent,
     SettingsComponent,
     LoginComponent,
-    SignupComponent
-
+    SignupComponent,
+    EventFormComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -36,8 +37,7 @@ import { TokenInterceptor } from './interseptors/token.interceptor';
     FormsModule,
     AppRoutingModule,
     ReactiveFormsModule,
-    NgToastModule,
-    ToastrModule.forRoot(),
+    ToastrModule.forRoot()
   ],
   providers: [
     SignalrService,

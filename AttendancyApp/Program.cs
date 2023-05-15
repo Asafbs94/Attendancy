@@ -33,12 +33,12 @@ builder.Services.AddAuthentication(x =>
     };
 });
 
-
-
+builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddControllersWithViews();
+builder.Services.AddSwaggerGen();
 builder.Services.AddSignalR(options =>
 {
-    options.EnableDetailedErrors= true;
+    options.EnableDetailedErrors = true;
 });
 builder.Services.AddCors(options =>
 {
@@ -78,5 +78,16 @@ app.UseEndpoints(endpoints =>
 {
     endpoints.MapControllers();
     endpoints.MapHub<myHub>("/toastr");
+});
+app.UseSwagger(options =>
+{
+    options.SerializeAsV2 = true;
+});
+
+app.UseSwaggerUI(options =>
+{
+    //options.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
+    //options.RoutePrefix = string.Empty;
+    //options.DocumentTitle = "Attendancy swagger";
 });
 app.Run();
