@@ -37,6 +37,7 @@ import { TokenInterceptor } from './interseptors/token.interceptor';
     FormsModule,
     AppRoutingModule,
     ReactiveFormsModule,
+    NgToastModule,
     ToastrModule.forRoot()
   ],
   providers: [

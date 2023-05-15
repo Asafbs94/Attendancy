@@ -39,7 +39,8 @@ namespace AttendancyApp.Controllers
                             .ConfigureAwait(false);
 
             if (user == null)
-                return NotFound(new { Message = "User not found!" });
+                // Not exposing to the user that the username is incorrect, In order not to reveal that there is a user with this username.
+                return BadRequest(new { Message = "The username or password is invalid." });
 
             // Checking if the password we got from the user is the correct one.
             var hashPassword = user.Password; // User hash password from the database.
