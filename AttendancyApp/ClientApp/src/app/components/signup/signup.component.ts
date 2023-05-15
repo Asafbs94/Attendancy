@@ -24,15 +24,9 @@ export class SignupComponent implements OnInit {
     this.signUpForm = this.fb.group({
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
-      // email: ['', [Validators.required, Validators.email]],
       email: ['', Validators.required],
       userName: ['', Validators.required],
       password: ['', Validators.required],
-      // password: ['', Validators.compose([
-      //   Validators.required,
-      //   Validators.minLength(8), // minimum length of 8 characters
-      //   Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/), // at least one uppercase, lowercase, digit, and special character
-      // ])]
     })
   }
 
@@ -61,16 +55,4 @@ export class SignupComponent implements OnInit {
       ValidateForm.validateAllFormFields(this.signUpForm);
     }
   }
-
-  // private validateAllFormFields(formGroup: FormGroup) {
-  //   Object.keys(formGroup.controls).forEach(field => {
-  //     const control = formGroup.get(field);
-  //     if (control instanceof FormControl) {
-  //       control.markAsDirty({ onlySelf: true });
-  //     } else if (control instanceof FormGroup) {
-  //       this.validateAllFormFields(control);
-  //     }
-
-  //   })
-  // }
 }

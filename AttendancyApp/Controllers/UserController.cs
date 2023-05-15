@@ -1,11 +1,9 @@
 ﻿using AttendancyApp.Context;
 using AttendancyApp.Helpers;
 using AttendancyApp.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Net.Mail;
 using System.Security.Claims;
@@ -151,7 +149,8 @@ namespace AttendancyApp.Controllers
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = identity,
-                Expires = DateTime.Now.AddDays(7),
+                Expires = DateTime.Now.AddSeconds(10),
+                //Expires = DateTime.Now.AddDays(7),
                 SigningCredentials = credentials
             };
 

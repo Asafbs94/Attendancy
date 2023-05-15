@@ -4,6 +4,7 @@ import { Route, Router } from '@angular/router';
 import { NgToastService } from 'ng-angular-popup';
 import ValidateForm from 'src/app/helpers/validateform';
 import { AuthService } from 'src/app/services/auth.service';
+import { UserStoreService } from 'src/app/services/user-store.service';
 
 @Component({
   selector: 'app-login',
@@ -17,17 +18,16 @@ export class LoginComponent implements OnInit {
   eyeIcon: string = "fa-eye-slash"
   loginForm: FormGroup;
 
-  constructor(private fb: FormBuilder, private auth: AuthService, private router: Router, private toast: NgToastService) { }
+  constructor(private fb: FormBuilder,
+    private auth: AuthService,
+    private router: Router,
+    private toast: NgToastService,
+    private userStore: UserStoreService) { }
 
   ngOnInit(): void {
     this.loginForm = this.fb.group({
       username: ['', Validators.required],
       password: ['', Validators.required],
-      // password: ['', Validators.compose([
-      //   Validators.required,
-      //   Validators.minLength(8), // minimum length of 8 characters
-      //   Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/), // at least one uppercase, lowercase, digit, and special character
-      // ])]
     })
   }
 
@@ -44,6 +44,9 @@ export class LoginComponent implements OnInit {
           next: (res) => {
             this.loginForm.reset();
             this.auth.storeToken(res.token);
+            const tokenPayload = this.auth.decodeToken();
+            this.userStore.setFullNameFromStore(tokenPayload.unique_name);
+            this.userStore.setRoleFromStore(tokenPayload.role);
             this.toast.success({ detail: "SUCCESS", summary: res.message, duration: 2000 });
             this.router.navigate(['dashboard'])
             return true;
@@ -58,16 +61,4 @@ export class LoginComponent implements OnInit {
       ValidateForm.validateAllFormFields(this.loginForm);
     }
   }
-
-  // private validateAllFormFields(formGroup: FormGroup) {
-  //   Object.keys(formGroup.controls).forEach(field => {
-  //     const control = formGroup.get(field);
-  //     if (control instanceof FormControl) {
-  //       control.markAsDirty({ onlySelf: true });
-  //     } else if (control instanceof FormGroup) {
-  //       this.validateAllFormFields(control);
-  //     }
-
-  //   })
-  // }
 }
