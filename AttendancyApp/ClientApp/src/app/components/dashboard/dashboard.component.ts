@@ -1,6 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import * as QRCode from 'qrcode';
+import { style } from '@angular/animations';
+import { ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
+import { UserStoreService } from 'src/app/services/user-store.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -8,17 +13,26 @@ import * as QRCode from 'qrcode';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
+  public userFullName: string = "";
   qrCodeData: string = '';
   selectedDate: string = '';
   events: any[] = [];
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient,
+    private route: ActivatedRoute,
+    private router: Router,
+    private userStore: UserStoreService,
+    private auth: AuthService) {
   }
 
   ngOnInit() {
     this.getEvents();
+    this.userStore.getFullNameFromStore()
+      .subscribe(val => {
+        let fullNameFromToken = this.auth.getFullNameFromToken(); // When refresing the page the observable will be empty so it will take the name from the token.
+        this.userFullName = val || fullNameFromToken;
+      });
   }
-
   generateUniqueCode(): string {
     const selectedEvent = this.events.find(e => e.eventName === this.selectedDate);
     if (selectedEvent) {

@@ -1,6 +1,7 @@
-﻿using AttendancyApp.Context;
+using AttendancyApp.Context;
 using AttendancyApp.HubConfig;
 using AttendancyApp.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;

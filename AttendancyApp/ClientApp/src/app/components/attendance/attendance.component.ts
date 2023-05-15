@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SignalrService } from '../../signalr.service';
+import { ApiService } from 'src/app/services/api.service';
 
 @Component({
   selector: 'app-attendance',
@@ -17,5 +18,6 @@ export class AttendanceComponent implements OnInit {
       student.fadedIn = true;
       this.students.push(student);
     });
+    // this.api.getAllAttendted();
   }
 }

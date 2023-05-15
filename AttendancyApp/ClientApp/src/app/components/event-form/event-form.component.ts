@@ -2,6 +2,8 @@ import { Component, ElementRef, NgZone, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
+import { NgToastService } from 'ng-angular-popup';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-event-form',
@@ -17,8 +19,9 @@ export class EventFormComponent {
   constructor(
     private formBuilder: FormBuilder,
     private ngZone: NgZone,
-    private httpClient: HttpClient
-  ) {
+    private httpClient: HttpClient,
+    private router: Router,
+    private toast: NgToastService) {
     this.eventForm = this.formBuilder.group({
       EventName: ['', Validators.required],
       EventDate: ['', Validators.required],
@@ -43,7 +46,9 @@ export class EventFormComponent {
     this.httpClient.post<any>(`${this.baseUrl}`, EventDto).subscribe(
       (response) => {
         // Request was successful
-        alert('the Event was created successfuly!');
+        // alert('the Event was created successfuly!');
+        this.toast.success({ detail: "SUCCESS", summary: "The event was created successfuly!", duration: 2000 });
+        this.router.navigate(['dashboard']);
       },
       (error) => {
         // Handle any errors that occurred during the request
