@@ -14,6 +14,9 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class DashboardComponent implements OnInit {
   public userFullName: string = "";
+  public userEmail: string = "";
+  public userName: string = "";
+
   qrCodeData: string = '';
   selectedDate: string = '';
   events: any[] = [];
@@ -31,6 +34,16 @@ export class DashboardComponent implements OnInit {
       .subscribe(val => {
         let fullNameFromToken = this.auth.getFullNameFromToken(); // When refresing the page the observable will be empty so it will take the name from the token.
         this.userFullName = val || fullNameFromToken;
+      });
+    this.userStore.getEmailFromStore()
+      .subscribe(val => {
+        let emailFromToken = this.auth.getEmailFromToken(); // When refresing the page the observable will be empty so it will take the name from the token.
+        this.userEmail = val || emailFromToken;
+      });
+    this.userStore.getUserNameFromStore()
+      .subscribe(val => {
+        let userNameFromToken = this.auth.getUserNameFromToken(); // When refresing the page the observable will be empty so it will take the name from the token.
+        this.userName = val || userNameFromToken;
       });
   }
   generateUniqueCode(): string {
