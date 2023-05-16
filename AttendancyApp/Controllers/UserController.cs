@@ -142,7 +142,8 @@ namespace AttendancyApp.Controllers
             {
                 new Claim(ClaimTypes.Role, user.Role),
                 new Claim(ClaimTypes.Name, $"{user.FirstName} {user.LastName}"),
-
+                new Claim(ClaimTypes.Email, user.Email),
+                new Claim(ClaimTypes.GivenName, user.UserName)
             });
 
             var credentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256);
@@ -150,8 +151,8 @@ namespace AttendancyApp.Controllers
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = identity,
-                Expires = DateTime.Now.AddSeconds(10),
-                //Expires = DateTime.Now.AddDays(7),
+                //Expires = DateTime.UtcNow.AddSeconds(10),
+                Expires = DateTime.UtcNow.AddDays(7),
                 SigningCredentials = credentials
             };
 

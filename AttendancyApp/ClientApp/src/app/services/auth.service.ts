@@ -24,7 +24,8 @@ export class AuthService {
   }
 
   signOut() {
-    localStorage.clear(); // clear the local storage to remove the token - its takes couple of seconds until the browser update.
+    localStorage.removeItem('token'); // to remove the token from the local storage.
+    localStorage.clear(); // clear the local storage - its takes couple of seconds until the browser update.
     this.router.navigate(['login']);
   }
 
@@ -50,12 +51,23 @@ export class AuthService {
     if (this.userPayload) {
       return this.userPayload.unique_name;
     }
-
   }
 
   getRoleFromToken() {
     if (this.userPayload) {
       return this.userPayload.role;
+    }
+  }
+
+  getEmailFromToken() {
+    if (this.userPayload) {
+      return this.userPayload.email;
+    }
+  }
+
+  getUserNameFromToken() {
+    if (this.userPayload) {
+      return this.userPayload.given_name;
     }
   }
 }
