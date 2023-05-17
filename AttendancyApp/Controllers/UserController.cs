@@ -152,7 +152,7 @@ namespace AttendancyApp.Controllers
             {
                 Subject = identity,
                 //Expires = DateTime.UtcNow.AddSeconds(10),
-                Expires = DateTime.UtcNow.AddDays(7),
+                Expires = DateTime.UtcNow.AddDays(365),
                 SigningCredentials = credentials
             };
 

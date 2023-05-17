@@ -13,8 +13,7 @@
 }
 
 /* Set background color for the body element */
-body {
-}
+body {}
 
 /* Style the navigation menu */
 nav {
@@ -158,6 +157,7 @@ a:hover i {
   font-size: 18px;
   margin-top: 20px;
 }
+
 button {
   background: transparent;
   border: none;
