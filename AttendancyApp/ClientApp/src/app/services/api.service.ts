@@ -5,7 +5,8 @@ import { HttpClient } from '@microsoft/signalr';
   providedIn: 'root'
 })
 export class ApiService {
-  private baseUrl: string = "https://localhost:44431/api/QrCode";
+  // private baseUrl: string = "https://localhost:44431/api/QrCode";
+  private baseUrl: string = "api/QrCode";
 
   constructor(private http: HttpClient) { }
 

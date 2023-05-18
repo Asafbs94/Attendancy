@@ -10,6 +10,7 @@ import { LoginComponent } from './components/login/login.component';
 import { SignupComponent } from './components/signup/signup.component';
 import { EventFormComponent } from './components/event-form/event-form.component';
 import { AuthGuard } from './guards/auth.guard';
+import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 
 const routes: Routes = [
   { path: 'eventCreation', component: EventFormComponent, pathMatch: 'full' },
@@ -20,6 +21,7 @@ const routes: Routes = [
   { path: 'report', component: ReportComponent, pathMatch: 'full' },
   { path: 'attendance', component: AttendanceComponent, pathMatch: 'full' },
   { path: 'setting', component: SettingsComponent, pathMatch: 'full' },
+  { path: 'reset-password', component: ResetPasswordComponent },
   { path: '**', redirectTo: 'login', pathMatch: 'full' }, // Handling all other routes - '**' means all other urls.
 ];
 
