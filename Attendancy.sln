@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33103.184
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AttendancyApp", "AttendancyApp\AttendancyApp.csproj", "{123831D4-A8B4-4D12-9889-3C89362A0710}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AttendancyApp", "AttendancyApp\AttendancyApp.csproj", "{123831D4-A8B4-4D12-9889-3C89362A0710}"
+EndProject
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "Attendancy.TrafficTest", "Attendancy.TrafficTest\Attendancy.TrafficTest.pyproj", "{C2165AE0-876C-4FE7-9D5F-A8B45B0D7E0A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,8 @@ Global
 		{123831D4-A8B4-4D12-9889-3C89362A0710}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{123831D4-A8B4-4D12-9889-3C89362A0710}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{123831D4-A8B4-4D12-9889-3C89362A0710}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C2165AE0-876C-4FE7-9D5F-A8B45B0D7E0A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C2165AE0-876C-4FE7-9D5F-A8B45B0D7E0A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
