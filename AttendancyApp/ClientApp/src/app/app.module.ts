@@ -17,6 +17,7 @@ import { SignupComponent } from './components/signup/signup.component';
 import { EventFormComponent } from './components/event-form/event-form.component';
 import { NgToastModule } from 'ng-angular-popup';
 import { TokenInterceptor } from './interseptors/token.interceptor';
+import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { TokenInterceptor } from './interseptors/token.interceptor';
     SettingsComponent,
     LoginComponent,
     SignupComponent,
-    EventFormComponent
+    EventFormComponent,
+    ResetPasswordComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),

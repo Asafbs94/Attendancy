@@ -101,12 +101,7 @@ namespace AttendancyApp.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Password")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("ResetPasswordExpiry")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("ResetPasswordToken")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Role")
@@ -116,6 +111,7 @@ namespace AttendancyApp.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");

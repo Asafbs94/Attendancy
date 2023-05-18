@@ -222,10 +222,17 @@ namespace AttendancyApp.Controllers
                 return BadRequest(new
                 {
                     StatusCode = 400,
-                    Message = "Invalid Rest link!"
+                    Message = "Invalid Reset link!"
                 });
             }
-            user.Password = PasswordHasher.HashPassword(resetPasswordDto.NewPassword);
+
+            // Check password strength.
+            var newPassword = resetPasswordDto.NewPassword;
+            var passError = CheckPasswordStrength(newPassword);
+            if (!string.IsNullOrEmpty(passError))
+                return BadRequest(new { Message = passError });
+
+            user.Password = PasswordHasher.HashPassword(newPassword);
             _authContext.Entry(user).State = EntityState.Modified;
             await _authContext.SaveChangesAsync();
             return Ok(new
