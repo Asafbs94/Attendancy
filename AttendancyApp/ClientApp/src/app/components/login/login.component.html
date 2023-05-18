@@ -67,7 +67,7 @@
                     <span style="font-size: 25px;font-weight: 700;">Forget your password?</span><br>
                     <small class="fw-bold">Please provide your Email and we will send the reset link.</small>
                 </p>
-                <button (click)="dontSend()" type="button" class="btn-close" data-bs-dismiss="modal"
+                <button (click)="exitForgetPasswordDialog()" type="button" class="btn-close" data-bs-dismiss="modal"
                     aria-label="Close"></button>
             </div>
 
@@ -82,7 +82,7 @@
                 <small *ngIf="!isValidEmail && resetPasswordEmail" class="text-danger">*Email is invalid</small>
             </div>
             <div class="modal-footer">
-                <button id="closeBtn" (click)="dontSend()" type="button" class="btn btn-secondary"
+                <button id="closeBtn" (click)="exitForgetPasswordDialog()" type="button" class="btn btn-secondary"
                     data-bs-dismiss="modal">Close</button>
                 <button type="button" (click)="confirmToSend()" class="btn btn-primary">Send</button>
             </div>

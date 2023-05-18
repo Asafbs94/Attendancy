@@ -32,7 +32,7 @@ export class LoginComponent implements OnInit {
     this.loginForm = this.fb.group({
       username: ['', Validators.required],
       password: ['', Validators.required],
-    })
+    });
   }
 
   hideShowPassword() {
@@ -75,18 +75,22 @@ export class LoginComponent implements OnInit {
     return this.isValidEmail;
   }
 
+  exitForgetPasswordDialog() {
+    this.resetPasswordEmail = "";
+  }
+
   confirmToSend() {
     if (this.checkValidEmail(this.resetPasswordEmail)) {
 
       this.resetService.sendResetPasswordLink(this.resetPasswordEmail)
         .subscribe({
           next: (res) => {
-            this.toast.success({
-              detail: "SUCCESS",
-              summary: "Reset password success",
-              duration: 2000
+            this.toast.info({
+              detail: "INFO",
+              summary: "Check your email inbox.",
+              duration: 3000
             });
-            this.resetPasswordEmail = "";
+            this.exitForgetPasswordDialog();
             const buttonRef = document.getElementById("closeBtn");
             buttonRef?.click();
           },
@@ -99,9 +103,5 @@ export class LoginComponent implements OnInit {
           }
         });
     }
-  }
-
-  dontSend() {
-    this.resetPasswordEmail = "";
   }
 }
