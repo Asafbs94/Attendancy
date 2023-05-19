@@ -40,7 +40,19 @@ namespace AttendancyApp.Controllers
 
             return Ok(eventModel);
         }
+        [HttpGet("GetParticipants/{guid}")]
+        public IActionResult GetParticipants(string guid)
+        {
+            var P = _dbContext.Events.Include("Participants").Where(e => e.Guid.ToString() == guid).FirstOrDefault()?.Participants;
+            var Participants = P.Where(x => x.IsArrived == true);
 
+            if (Participants == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(Participants);
+        }
 
         [HttpPost]
         public async Task<IActionResult> CreateEvent([FromBody] EventDto eventModel)
@@ -51,6 +63,7 @@ namespace AttendancyApp.Controllers
             }
 
             var eventTime = DateTime.ParseExact(eventModel.EventTime, "HH:mm", CultureInfo.InvariantCulture);
+            var Creator = _dbContext.Users.Where(u => u.UserName.ToLower() == eventModel.Creator).FirstOrDefault();
             var newEvent = new EventModel
             {
                 EventName = eventModel.EventName,
@@ -58,7 +71,8 @@ namespace AttendancyApp.Controllers
                 EventDate = DateTime.Parse(eventModel.EventDate),
                 EventTime = eventTime.TimeOfDay,
                 EventDescription = eventModel.EventDescription,
-                EventLocation = eventModel.EventLocation
+                EventLocation = eventModel.EventLocation,
+                Creator = Creator,
             };
 
             _dbContext.Events.Add(newEvent);
@@ -116,6 +130,9 @@ namespace AttendancyApp.Controllers
     {
         public string EventName { get; set; }
         public string EventDate { get; set; }
+
+        public string Creator { get; set; }
+
         public string EventTime { get; set; }
         public string EventDescription { get; set; }
         public string EventLocation { get; set; }

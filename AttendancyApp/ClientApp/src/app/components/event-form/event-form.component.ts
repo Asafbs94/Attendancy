@@ -4,6 +4,8 @@ import { HttpClient } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgToastService } from 'ng-angular-popup';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/app/services/auth.service';
+import { UserStoreService } from 'src/app/services/user-store.service';
 
 @Component({
   selector: 'app-event-form',
@@ -15,14 +17,16 @@ export class EventFormComponent {
   @ViewChild('eventLocation') locationInput: ElementRef;
   // private baseUrl: string = "https://localhost:44431/Event";
   private baseUrl: string = "/Event";
-
+  public userName: string = "";
   suggestions: string[] = [];
   constructor(
     private formBuilder: FormBuilder,
     private ngZone: NgZone,
     private httpClient: HttpClient,
     private router: Router,
-    private toast: NgToastService) {
+    private toast: NgToastService,
+    private userStore: UserStoreService,
+    private auth: AuthService) {
     this.eventForm = this.formBuilder.group({
       EventName: ['', Validators.required],
       EventDate: ['', Validators.required],
@@ -42,7 +46,13 @@ export class EventFormComponent {
 
 
   async onSubmit() {
-    const EventDto = this.eventForm.value;
+    var EventDto = this.eventForm.value;
+    this.userStore.getUserNameFromStore()
+    .subscribe(val => {
+      let userNameFromToken = this.auth.getUserNameFromToken(); // When refresing the page the observable will be empty so it will take the name from the token.
+      this.userName = val || userNameFromToken;
+    });
+    EventDto = { ...this.eventForm.value, Creator: this.userName };
     console.log(EventDto);
     this.httpClient.post<any>(`${this.baseUrl}`, EventDto).subscribe(
       (response) => {
