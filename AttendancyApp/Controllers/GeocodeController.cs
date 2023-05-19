@@ -67,6 +67,7 @@ namespace AttendancyApp.Controllers
                 return StatusCode(500, $"An error occurred while fetching geocode data: {ex.Message}");
             }
         }
+    
     }
 
     public class Result
