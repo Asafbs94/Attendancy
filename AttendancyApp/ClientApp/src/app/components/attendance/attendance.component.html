@@ -1,11 +1,13 @@
 <app-navbar></app-navbar>
-
 <h1 style="text-align: center; margin-top: 1rem;">Let's see who arrived!</h1>
+<div class="date-selector" style="text-align: center;">
+  <select id="dateDropdown" [(ngModel)]="selectedDate" (change)="getParticipants()">
+    <option *ngFor="let e of events" [value]="e.eventName">{{ e.eventName }}</option>
+  </select>
+</div>
 <div class="student-card-list">
-  <div class="student-card" *ngFor="let student of students" [ngClass]="{'fade-in': student.fadedIn}">
-    <div class="student-card-picture-container">
-      <img [src]="student.profilePictureUrl" alt="Profile picture" class="student-card-picture">
-    </div>
-    <div class="student-card-name">{{student.name}}</div>
+  <div class="student-card" *ngFor="let p of participants" [ngClass]="{'fade-in': p.fadedIn}">
+    <div class="student-card-name">{{p.name}}</div>
   </div>
 </div>
+

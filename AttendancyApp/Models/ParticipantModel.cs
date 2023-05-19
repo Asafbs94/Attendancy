@@ -8,5 +8,7 @@ namespace AttendancyApp.Models
         public int Id { get; set; }
         public string? Email { get; set; }
         public int? ParticipantId { get; set; }
+
+        public bool? IsArrived { get; set; }
     }
 }

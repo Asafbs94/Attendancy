@@ -29,22 +29,22 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getEvents();
     this.userStore.getFullNameFromStore()
-      .subscribe(val => {
-        let fullNameFromToken = this.auth.getFullNameFromToken(); // When refresing the page the observable will be empty so it will take the name from the token.
-        this.userFullName = val || fullNameFromToken;
-      });
+    .subscribe(val => {
+      let fullNameFromToken = this.auth.getFullNameFromToken(); // When refresing the page the observable will be empty so it will take the name from the token.
+      this.userFullName = val || fullNameFromToken;
+    });
     this.userStore.getEmailFromStore()
-      .subscribe(val => {
-        let emailFromToken = this.auth.getEmailFromToken(); // When refresing the page the observable will be empty so it will take the name from the token.
-        this.userEmail = val || emailFromToken;
-      });
+    .subscribe(val => {
+      let emailFromToken = this.auth.getEmailFromToken(); // When refresing the page the observable will be empty so it will take the name from the token.
+      this.userEmail = val || emailFromToken;
+    });
     this.userStore.getUserNameFromStore()
-      .subscribe(val => {
-        let userNameFromToken = this.auth.getUserNameFromToken(); // When refresing the page the observable will be empty so it will take the name from the token.
-        this.userName = val || userNameFromToken;
-      });
+    .subscribe(val => {
+      let userNameFromToken = this.auth.getUserNameFromToken(); // When refresing the page the observable will be empty so it will take the name from the token.
+      this.userName = val || userNameFromToken;
+    });
+    this.getEvents();
   }
   generateUniqueCode(): string {
     const selectedEvent = this.events.find(e => e.eventName === this.selectedDate);
@@ -73,7 +73,7 @@ export class DashboardComponent implements OnInit {
   getEvents() {
     // TODO : make it predicate for current user
     //var username = authservice.getUsername
-    this.http.get<Event[]>('/Event').subscribe(
+    this.http.get<Event[]>('/Event/'+this.userName.toString()).subscribe(
       response => {
         this.events = response;
       },

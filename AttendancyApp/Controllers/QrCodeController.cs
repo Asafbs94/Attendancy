@@ -31,6 +31,7 @@ namespace AttendancyApp.Controllers
                 {
                     Email = !string.IsNullOrEmpty(location.Email) ? location.Email : string.Empty,
                     ParticipantId = location.Id != 0 ? location.Id : 0,
+                    IsArrived = true
                 };
                 try
                 {
@@ -42,8 +43,11 @@ namespace AttendancyApp.Controllers
                     currentEvent.Participants.Add(newParticipant);
 
                     _authContext.SaveChanges();
-
-                    hubContext.Clients.All.SendAsync("studentReceived", newParticipant.Email.IsNullOrEmpty() ? newParticipant.Id : newParticipant.Email);
+                    Attendand a = new Attendand {
+                      name = newParticipant.Email.IsNullOrEmpty() ? newParticipant.Id.ToString() : newParticipant.Email,
+                      profilePictureUrl = "",
+                    };
+                    hubContext.Clients.All.SendAsync("studentReceived", a);
 
                     return Ok(200);
                 }
@@ -62,6 +66,14 @@ namespace AttendancyApp.Controllers
             public int? Id { get; set; }
             public string? Email { get; set; }
             public string? guid { get; set; }
+        }
+        public class Attendand
+        {
+            public string? name { get; set; }
+
+            public string? profilePictureUrl { get; set; }
+
+            public bool fadedIn = true;
         }
 
     }

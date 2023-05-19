@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { SignalrService } from '../../signalr.service';
-import { ApiService } from 'src/app/services/api.service';
+import { SignalrService } from 'src/app/signalr.service';
+import { HttpClient } from '@angular/common/http';
+import { UserStoreService } from 'src/app/services/user-store.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-attendance',
@@ -8,16 +10,48 @@ import { ApiService } from 'src/app/services/api.service';
   styleUrls: ['./attendance.component.css']
 })
 export class AttendanceComponent implements OnInit {
-  students: any[] = [{ name: "Asaf Ben Shabat", profilePictureUrl: "https://scontent.ftlv1-1.fna.fbcdn.net/v/t39.30808-6/306269878_10227887300630933_2972036365482101027_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=pF96jenYD00AX88CG7s&tn=6nTCq-vOe_Rr6OQ5&_nc_ht=scontent.ftlv1-1.fna&oh=00_AfBxVoqB2KLDw2NDDSOfS-BPp84fAljuNjP8eyPK8pVeYw&oe=63BC9D44", fadedIn: true }];
-
-  constructor(private signalrService: SignalrService) { }
+  participants: any[] = []
+  selectedDate = ""
+  events: any[] = [];
+  userName = [];
+  constructor(private signalrService: SignalrService,private http:HttpClient,public userStore:UserStoreService,public auth:AuthService) { }
   ngOnInit(): void {
+    this.userStore.getUserNameFromStore()
+    .subscribe(val => {
+      let userNameFromToken = this.auth.getUserNameFromToken(); // When refresing the page the observable will be empty so it will take the name from the token.
+      this.userName = val || userNameFromToken;
+    });
+    this.getEvents();
     this.signalrService.startConnection();
     this.signalrService.addStudentReceivedListener();
-    this.signalrService.studentReceived.subscribe((student: any) => {
-      student.fadedIn = true;
-      this.students.push(student);
+    this.signalrService.studentReceived.subscribe((p: any) => {
+      p.fadedIn = true
+      console.log(p);
+      this.participants.push(p);
     });
-    // this.api.getAllAttendted();
+  }
+
+  async getParticipants(){
+    var selectedEventGuid = this.events.filter(x => x.eventName == this.selectedDate)[0].guid;
+    console.log(selectedEventGuid)
+    this.http.get<Event[]>('/Event/GetParticipants/'+ selectedEventGuid).subscribe(
+      response => {
+        this.participants = response;
+      },
+      error => {
+        console.error(error);
+      }
+    );
+
+  }
+  getEvents() {
+    this.http.get<Event[]>('/Event/'+this.userName.toString()).subscribe(
+      response => {
+        this.events = response;
+      },
+      error => {
+        console.error(error);
+      }
+    );
   }
 }
