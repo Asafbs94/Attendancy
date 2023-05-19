@@ -1,3 +1,4 @@
+<app-navbar></app-navbar>
 <form [formGroup]="eventForm" (ngSubmit)="onSubmit()" class="event-form">
   <div class="form-field">
     <label for="eventName">Event Name</label>
@@ -17,7 +18,7 @@
   </div>
   <div class="form-field">
     <label for="eventLocation">Event Location</label>
-    <input type="text" id="eventLocation" formControlName="EventLocation" (input)="onLocationInput()" required>
+    <input placeholder="Please wait to google maps to fill in!" type="text" id="eventLocation" formControlName="EventLocation" (input)="onLocationInput()" required>
     <div class="suggestions" *ngIf="suggestions.length > 0">
       <div class="suggestion" *ngFor="let suggestion of suggestions" (click)="selectSuggestion(suggestion)">
         {{ suggestion }}
