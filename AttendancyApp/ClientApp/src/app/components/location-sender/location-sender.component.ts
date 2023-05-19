@@ -1,17 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { SignalrService } from '../../signalr.service';
+import { NgToastService } from 'ng-angular-popup';
 
 @Component({
   selector: 'app-location-sender',
   templateUrl: './location-sender.component.html'
 })
 export class LocationSenderComponent implements OnInit {
-  id: Number = 0;
+  id: Number;
   email: string = "";
   isSent: boolean = false;
 
-  constructor(private http: HttpClient, public signalrService: SignalrService) {
+  constructor(private http: HttpClient, public signalrService: SignalrService,private toast:NgToastService) {
     this.signalrService.startConnection();
   }
 
@@ -19,11 +20,10 @@ export class LocationSenderComponent implements OnInit {
   }
 
   sendInformation(): void {
-    // Check if ID or email is provided
-    const isIdProvided: boolean = !!this.id;
+    // Check if email is provided
     const isEmailProvided: boolean = !!this.email;
 
-    if (!this.isSent && (isIdProvided || isEmailProvided)) {
+    if (!this.isSent && isEmailProvided) {
       // Get the current location
       navigator.geolocation.getCurrentPosition((position) => {
         const lat: number = position.coords.latitude;
@@ -39,23 +39,24 @@ export class LocationSenderComponent implements OnInit {
         const data: any = {
           lat,
           lng,
-          guid
+          guid,
+          id: 0, // Set ID to 0
+          email: this.email // Use the provided email
         };
-
-        if (isIdProvided) {
-          data.id = this.id;
-        }
-
-        if (isEmailProvided) {
-          data.email = this.email;
-        }
 
         console.log(data);
 
         // Make an HTTP request to the server with the current location and user data
-        this.http.post('QrCode', data).subscribe(() => {
-          this.isSent = true; // Set isSent flag to true
-        });
+        this.http.post('QrCode', data).subscribe(
+          (response) => {
+            console.log('Response:', response);
+            this.isSent = true; // Set isSent flag to true
+          },
+          (error) => {
+            this.toast.error({ detail: "ERROR", summary: error.error, duration: 5000 });
+            // Handle the error case if needed
+          }
+        );
       });
     }
   }

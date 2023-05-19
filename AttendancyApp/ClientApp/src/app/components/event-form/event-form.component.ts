@@ -14,7 +14,7 @@ import { environment } from 'src/environments/environment';
 export class EventFormComponent {
   eventForm: FormGroup;
   @ViewChild('eventLocation') locationInput: ElementRef;
-  private baseUrl: string = "https://localhost:44431/Event";
+  private baseUrl: string = "/Event";
   userName = ""
   suggestions: string[] = [];
 

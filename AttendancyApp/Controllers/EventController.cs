@@ -3,8 +3,10 @@ using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using AttendancyApp.Context;
+using AttendancyApp.HubConfig;
 using AttendancyApp.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
@@ -15,9 +17,12 @@ namespace AttendancyApp.Controllers
     public class EventController : ControllerBase
     {
         private readonly AppDbContext _dbContext;
+        private readonly IHubContext<myHub> hubContext;
 
-        public EventController(AppDbContext dbContext)
+
+        public EventController(AppDbContext dbContext, IHubContext<myHub> hubContext)
         {
+            this.hubContext = hubContext;
             _dbContext = dbContext;
         }
 
@@ -44,14 +49,28 @@ namespace AttendancyApp.Controllers
         public IActionResult GetParticipants(string guid)
         {
             var P = _dbContext.Events.Include("Participants").Where(e => e.Guid.ToString() == guid).FirstOrDefault()?.Participants;
-            var Participants = P.Where(x => x.IsArrived == true);
+            var Participants = P.Where(x => x.IsArrived == true).ToList();
 
             if (Participants == null)
             {
                 return NotFound();
             }
+            List<Attendand> Alist = new List<Attendand>();
+                foreach(ParticipantModel p in Participants) {
+                Alist.Add(new Attendand
+                {
+                    name = p.Email,
+                    profilePictureUrl = null,
+                    fadedIn = true
+                });
+            
+            }
 
-            return Ok(Participants);
+            foreach(Attendand attendand in Alist)
+            {
+                hubContext.Clients.All.SendAsync("studentReceived", attendand);
+            }
+            return Ok(Alist);
         }
 
         [HttpPost]
@@ -136,5 +155,13 @@ namespace AttendancyApp.Controllers
         public string EventTime { get; set; }
         public string EventDescription { get; set; }
         public string EventLocation { get; set; }
+    }
+    public class Attendand
+    {
+        public string? name { get; set; }
+
+        public string? profilePictureUrl { get; set; }
+
+        public bool fadedIn = true;
     }
 }

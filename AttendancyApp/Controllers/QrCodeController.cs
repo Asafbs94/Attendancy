@@ -71,7 +71,7 @@ namespace AttendancyApp.Controllers
             }
             else
             {
-                return BadRequest("Your NOT int the event area you area is marked as " + locationString + " Event location is " + EventLocation);
+                return BadRequest("Your NOT int the event area you area is marked as " + locationString + " Event location is " + currentEvent.EventLocation);
             }
         }
         [HttpGet("/GetLocationByCoordinatesAsync")]
