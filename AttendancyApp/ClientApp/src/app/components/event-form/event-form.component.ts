@@ -1,12 +1,11 @@
 import { Component, ElementRef, NgZone, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
-import { ReactiveFormsModule } from '@angular/forms';
-import { NgToastService } from 'ng-angular-popup';
-import { Router } from '@angular/router';
-import { AuthService } from 'src/app/services/auth.service';
 import { UserStoreService } from 'src/app/services/user-store.service';
-
+import { AuthService } from 'src/app/services/auth.service';
+import { Router } from '@angular/router';
+import { NgToastService } from 'ng-angular-popup';
+import { environment } from 'src/environments/environment';
 @Component({
   selector: 'app-event-form',
   templateUrl: './event-form.component.html',
@@ -15,18 +14,20 @@ import { UserStoreService } from 'src/app/services/user-store.service';
 export class EventFormComponent {
   eventForm: FormGroup;
   @ViewChild('eventLocation') locationInput: ElementRef;
-  // private baseUrl: string = "https://localhost:44431/Event";
-  private baseUrl: string = "/Event";
-  public userName: string = "";
+  private baseUrl: string = "https://localhost:44431/Event";
+  userName = ""
   suggestions: string[] = [];
+
   constructor(
     private formBuilder: FormBuilder,
     private ngZone: NgZone,
     private httpClient: HttpClient,
-    private router: Router,
-    private toast: NgToastService,
     private userStore: UserStoreService,
-    private auth: AuthService) {
+    private auth : AuthService,
+    private router: Router,
+    private toast : NgToastService
+
+  ) {
     this.eventForm = this.formBuilder.group({
       EventName: ['', Validators.required],
       EventDate: ['', Validators.required],
@@ -43,7 +44,6 @@ export class EventFormComponent {
       }
     });
   }
-
 
   async onSubmit() {
     var EventDto = this.eventForm.value;
@@ -69,20 +69,22 @@ export class EventFormComponent {
   }
 
 
-
   onLocationInput() {
-    const location = this.locationInput.nativeElement.value;
+    const locationInput = document.getElementById('eventLocation') as HTMLInputElement;
+    const location = locationInput.value;
     if (location) {
-      const apiKey = 'c04d7635234a4af1a4436cfa63ee1e80'; // Replace with your actual OpenCage Geocoder API key
-      const apiUrl = `https://api.opencagedata.com/geocode/v1/json?q=${encodeURIComponent(location)}&key=${apiKey}&limit=5`;
-
-      this.httpClient.get(apiUrl).subscribe((response: any) => {
-        if (response.results && response.results.length > 0) {
-          this.suggestions = response.results.map((result: any) => result.formatted);
-        } else {
-          this.suggestions = [];
+      this.httpClient.get<string[]>('/geocode', { params: { location: location } }).subscribe(
+        (data: string[]) => {
+          if (data && data.length > 0) {
+            this.suggestions = data;
+          } else {
+            this.suggestions = [];
+          }
+        },
+        (error: any) => {
+          console.error('An error occurred while fetching geocode data:', error);
         }
-      });
+      );
     } else {
       this.suggestions = [];
     }
@@ -90,7 +92,7 @@ export class EventFormComponent {
 
   selectSuggestion(suggestion: string) {
     this.eventForm.patchValue({
-      eventLocation: suggestion
+      EventLocation: suggestion
     });
     this.suggestions = [];
   }

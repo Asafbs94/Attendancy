@@ -10,6 +10,8 @@ const PROXY_CONFIG = [
       "/swagger",
       "/toastr",
       "/api/User",
+      "/Geocode",
+      "/geocode",
       "/Event"
     ],
     target: target,
