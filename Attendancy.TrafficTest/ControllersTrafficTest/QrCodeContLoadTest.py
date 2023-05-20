@@ -7,13 +7,14 @@ class QrCodeUser(HttpUser):
     @task
     def post_qrcode(self):
         headers = {'Content-Type': 'application/json'}
-        data = {
-            "Lat": 123.45,
-            "Lng": 67.89,
-            "Id": 1,
-            "Email": "test@example.com",
-            "Guid": "abcdef"
-        }
+        data ={
+                "lat": 33.24570382392669,
+                "lng": 35.59545349034977,
+                 "id": 0,
+                 "email": "string",
+                "guid": "C21C7DDA-00C8-4C5A-A980-6398A33C2165"
+}
+
         self.client.post("/qrCode", json=data, headers=headers)
 
 # Running Instructions:

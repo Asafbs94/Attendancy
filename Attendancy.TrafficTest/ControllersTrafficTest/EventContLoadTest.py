@@ -19,7 +19,7 @@ class EventUser(HttpUser):
             "EventDate": "2023-05-18",
             "EventTime": "10:00",
             "EventDescription": "Test event description",
-            "EventLocation": "Test location"
+            "EventLocation": "Yuval, Israel"
         }
         response = self.client.post("/event", json=event_data)  # Replace with your endpoint
         self.process_response(response)
