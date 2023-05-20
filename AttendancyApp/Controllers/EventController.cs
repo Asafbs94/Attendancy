@@ -32,6 +32,28 @@ namespace AttendancyApp.Controllers
             var events = _dbContext.Events.Include("Creator").Where(u => u.Creator.UserName.ToLower() == UserName.ToLower()).ToList();
             return Ok(events);
         }
+        [HttpPost("AddParticipant")]
+        public IActionResult AddParticipant(ParticipantDTO PDTO)
+        {
+            try
+            {
+                var events = _dbContext.Events.Include("Participants").Where(e => e.Guid.ToString().ToLower() == PDTO.EventGuid.ToLower()).FirstOrDefault();
+                var newP = new ParticipantModel
+                {
+                    Email = PDTO.participant.Email,
+                    ParticipantId = PDTO.participant.ParticipantId,
+                    IsArrived = false
+                };
+                events.Participants.Add(newP);
+                _dbContext.SaveChanges();
+                return Ok();
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+         
+        }
 
         [HttpGet]
         public IActionResult Get()
@@ -163,5 +185,10 @@ namespace AttendancyApp.Controllers
         public string? profilePictureUrl { get; set; }
 
         public bool fadedIn = true;
+    }
+    public class ParticipantDTO
+    {
+        public ParticipantModel participant { get; set; }
+        public string EventGuid { get; set; }
     }
 }

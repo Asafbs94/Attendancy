@@ -1,0 +1,12 @@
+<app-navbar></app-navbar>
+<div class="mail-container">
+  <div class="form-container">
+    <label for="toField">To:</label>
+    <input id="toField" type="text" [(ngModel)]="to" (input)="validateToField()" placeholder="Separte emails by ',' " [ngClass]="{'invalid-email': isEmailInvalid}">
+    <br>
+    <label for="messageBodyField">Message Body:</label>
+    <textarea id="messageBodyField" [(ngModel)]="messageBody"></textarea>
+    <br>
+    <button (click)="sendMail()" [disabled]="isEmailInvalid || !messageBody">Send</button>
+  </div>
+</div>

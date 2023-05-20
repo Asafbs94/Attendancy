@@ -6,6 +6,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { Router } from '@angular/router';
 import { NgToastService } from 'ng-angular-popup';
 import { environment } from 'src/environments/environment';
+import { getBaseUrl } from 'src/main';
 
 @Component({
   selector: 'app-event-form',
@@ -16,12 +17,13 @@ export class EventFormComponent {
   eventForm: FormGroup;
   @ViewChild('eventLocation') locationInput: ElementRef;
   private baseUrl: string = "/Event";
+  private url = getBaseUrl();
   userName = "";
   showInvite = false;
   suggestions: string[] = [];
   inviteMessage: string = "";
   userEmail = ""
-
+  eventGuid = "";
   constructor(
     private formBuilder: FormBuilder,
     private ngZone: NgZone,
@@ -64,8 +66,10 @@ export class EventFormComponent {
     this.httpClient.post<any>(`${this.baseUrl}`, EventDto).subscribe(
       (response) => {
         // Request was successful
+        console.log(response.guid);
         this.toast.success({ detail: "SUCCESS", summary: "The event was created successfully!", duration: 2000 });
         this.showInvite = true;
+        this.eventGuid = response.guid;
         this.generateInviteMessage(EventDto); // Generate the invite message
       },
       (error) => {
@@ -76,13 +80,14 @@ export class EventFormComponent {
   }
 
   generateInviteMessage(eventData: any) {
+    console.log(this.eventGuid)
     // Customize the invite message as desired
       // Customize the invite message as desired
 this.inviteMessage = `You're invited to the event: ${eventData.EventName}` + '\n';
 this.inviteMessage += `Date: ${eventData.EventDate}` + '\n';
 this.inviteMessage += `Time: ${eventData.EventTime}` + '\n';
 this.inviteMessage += `Location: ${eventData.EventLocation} ` + '\n';
-this.inviteMessage += `For Registeration contact me at: ${this.userEmail}` + '\n';;
+this.inviteMessage += `For Registration: ${this.url}eventregistartion/` + this.eventGuid.toString() + '\n';;
 
   }
 
@@ -122,9 +127,8 @@ this.inviteMessage += `For Registeration contact me at: ${this.userEmail}` + '\n
     });
     this.suggestions = [];
   }
-  goToDashboard(){
-    this.router.navigate(['dashboard'])
-
+  goToMail(){
+    this.router.navigate(['mail'], { queryParams: { message: this.inviteMessage } })
   }
 }
 
