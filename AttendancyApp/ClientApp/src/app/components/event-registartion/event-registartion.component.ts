@@ -10,12 +10,12 @@ import { NgToastService } from 'ng-angular-popup';
   templateUrl: './event-registartion.component.html',
   styleUrls: ['./event-registartion.component.css']
 })
-export class EventRegistartionComponent{
+export class EventRegistartionComponent {
   participant: { email: string, participantId: string } = { email: '', participantId: '' };
   eventGuid: string = "";
 
-  constructor(private route: ActivatedRoute, private http: HttpClient,private router:Router,    private toast: NgToastService
-    ) {
+  constructor(private route: ActivatedRoute, private http: HttpClient, private router: Router, private toast: NgToastService
+  ) {
     this.eventGuid = this.route.snapshot.paramMap.get('id') || "";
   }
 

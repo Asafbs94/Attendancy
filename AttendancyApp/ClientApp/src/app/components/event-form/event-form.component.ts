@@ -57,10 +57,10 @@ export class EventFormComponent {
       this.userName = val || userNameFromToken;
     });
     this.userStore.getEmailFromStore()
-    .subscribe(val => {
-      let emailFromToken = this.auth.getEmailFromToken(); // When refresing the page the observable will be empty so it will take the name from the token.
-      this.userEmail = val || emailFromToken;
-    });
+      .subscribe(val => {
+        let emailFromToken = this.auth.getEmailFromToken(); // When refresing the page the observable will be empty so it will take the name from the token.
+        this.userEmail = val || emailFromToken;
+      });
     EventDto = { ...this.eventForm.value, Creator: this.userName };
     console.log(EventDto);
     this.httpClient.post<any>(`${this.baseUrl}`, EventDto).subscribe(
@@ -82,12 +82,12 @@ export class EventFormComponent {
   generateInviteMessage(eventData: any) {
     console.log(this.eventGuid)
     // Customize the invite message as desired
-      // Customize the invite message as desired
-this.inviteMessage = `You're invited to the event: ${eventData.EventName}` + '\n';
-this.inviteMessage += `Date: ${eventData.EventDate}` + '\n';
-this.inviteMessage += `Time: ${eventData.EventTime}` + '\n';
-this.inviteMessage += `Location: ${eventData.EventLocation} ` + '\n';
-this.inviteMessage += `For Registration: ${this.url}eventregistartion/` + this.eventGuid.toString() + '\n';;
+    // Customize the invite message as desired
+    this.inviteMessage = `You're invited to the event: ${eventData.EventName}` + '\n';
+    this.inviteMessage += `Date: ${eventData.EventDate}` + '\n';
+    this.inviteMessage += `Time: ${eventData.EventTime}` + '\n';
+    this.inviteMessage += `Location: ${eventData.EventLocation} ` + '\n';
+    this.inviteMessage += `For Registration: ${this.url}eventregistartion/` + this.eventGuid.toString() + '\n';;
 
   }
 
@@ -127,7 +127,7 @@ this.inviteMessage += `For Registration: ${this.url}eventregistartion/` + this.e
     });
     this.suggestions = [];
   }
-  goToMail(){
+  goToMail() {
     this.router.navigate(['mail'], { queryParams: { message: this.inviteMessage } })
   }
 }

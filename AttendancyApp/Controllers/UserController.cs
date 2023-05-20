@@ -134,12 +134,12 @@ namespace AttendancyApp.Controllers
         {
             var sb = new StringBuilder();
             if (password.Length < 8)
-                sb.Append("Minimum password length should be 8" + Environment.NewLine);
+                sb.Append("*Password should be at least 8 length." + Environment.NewLine);
             if(!(Regex.IsMatch(password, "[a-z]") && Regex.IsMatch(password, "[A-Z]")
                 && Regex.IsMatch(password, "[0-9]")))
-                sb.Append("Password should be Alphanumeric" + Environment.NewLine);
+                sb.Append("*Password should be Alphanumeric." + Environment.NewLine);
             if (!Regex.IsMatch(password, "[<,>,!,@,#,$,%,^,&,*,(,),_,+,\\-,=,\\[,\\],{,},;,',:,\",\\,|,.,/,?,`,~]"))
-                sb.Append("Password should contain special characters: <>!@#$%^&*()_+\\-=[]{};':\"|./?`~" + Environment.NewLine);
+                sb.Append("*Password should contain special characters: <>!@#$%^&*()_+\\-=[]{};':\"|./?`~" + Environment.NewLine);
 
             return sb.ToString();
         }
@@ -188,7 +188,7 @@ namespace AttendancyApp.Controllers
             user.ResetPasswordExpiry = DateTime.Now.AddMinutes(15);
             string from = _configuration["EmailSettings:From"];
 
-            var emailModel = new EmailModel(email, "Reset password", EmailBody.EmailStringBody(email, emailToken));
+            var emailModel = new EmailModel(email, "Reset password", EmailBodyTemplates.ResetPasswordEmailStringBody(email, emailToken));
 
             _emailService.SendEmail(emailModel);
             _authContext.Entry(user).State = EntityState.Modified;
@@ -201,7 +201,7 @@ namespace AttendancyApp.Controllers
         }
 
         [HttpPost("reset-password")]
-        public async Task<IActionResult> ResetPasswordAsync(ResetPasswordDto resetPasswordDto)
+        public async Task<IActionResult> ResetPasswordAsync([FromBody]ResetPasswordDto resetPasswordDto)
         {
             var newToken = resetPasswordDto.EmailToken.Replace(" ", "+");
             var user = await _authContext.Users.AsNoTracking().FirstOrDefaultAsync(u => u.Email == resetPasswordDto.Email);
@@ -241,5 +241,63 @@ namespace AttendancyApp.Controllers
                 Message = "Password rest successfully"
             });
         }
+
+        [HttpPost("send-email/invitation")]
+        public IActionResult SendInvitationEmail([FromBody] EmailModel model)
+        {
+            var emails = model.To.Split(',');
+            if (emails.Length == 0)
+                return BadRequest(new
+                {
+                    StatusCode = 400,
+                    Message = "Email not provided"
+                });
+
+            foreach (var email in emails)
+            {
+                if (string.IsNullOrEmpty(email))
+                    continue; // Skip empty email addresses
+
+                var emailModel = new EmailModel(email, model.Subject, EmailBodyTemplates.EmailInvitationStringBody(email, model.Subject, model.Content));
+                _emailService.SendEmail(emailModel);
+                //_emailService.SendEmail(new EmailModel(email, model.Subject + " dontReply", model.Content));
+            }
+
+            return Ok(new
+            {
+                StatusCode = 200,
+                Message = "Email sent."
+            });
+        }
+
+
+        [HttpPost("send-email/absent")]
+        public IActionResult SendAbsentEmail([FromBody] EmailModel model)
+        {
+            var emails = model.To.Split(',');
+            if (emails.Length == 0)
+                return BadRequest(new
+                {
+                    StatusCode = 400,
+                    Message = "Email not provided"
+                });
+
+            foreach (var email in emails)
+            {
+                if (string.IsNullOrEmpty(email))
+                    continue; // Skip empty email addresses
+
+                var emailModel = new EmailModel(email, model.Subject, EmailBodyTemplates.EmailAbsentStringBody(email, model.Subject, model.Content));
+                _emailService.SendEmail(emailModel);
+                //_emailService.SendEmail(new EmailModel(email, model.Subject + " dontReply", model.Content));
+            }
+
+            return Ok(new
+            {
+                StatusCode = 200,
+                Message = "Email sent."
+            });
+        }
+
     }
 }

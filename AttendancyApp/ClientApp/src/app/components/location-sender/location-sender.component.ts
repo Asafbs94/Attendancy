@@ -12,7 +12,7 @@ export class LocationSenderComponent implements OnInit {
   email: string = "";
   isSent: boolean = false;
 
-  constructor(private http: HttpClient, public signalrService: SignalrService,private toast:NgToastService) {
+  constructor(private http: HttpClient, public signalrService: SignalrService, private toast: NgToastService) {
     this.signalrService.startConnection();
   }
 
