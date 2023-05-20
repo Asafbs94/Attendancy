@@ -71,6 +71,7 @@ namespace AttendancyApp.Controllers
         public IActionResult GetParticipants(string guid)
         {
             var P = _dbContext.Events.Include("Participants").Where(e => e.Guid.ToString() == guid).FirstOrDefault()?.Participants;
+            var e = _dbContext.Events.Include("Participants").Where(e => e.Guid.ToString() == guid).FirstOrDefault();
             var Participants = P.Where(x => x.IsArrived == true).ToList();
 
             if (Participants == null)
@@ -82,7 +83,7 @@ namespace AttendancyApp.Controllers
                 Alist.Add(new Attendand
                 {
                     name = p.Email,
-                    profilePictureUrl = null,
+                    profilePictureUrl = e.EventName ,
                     fadedIn = true
                 });
             
