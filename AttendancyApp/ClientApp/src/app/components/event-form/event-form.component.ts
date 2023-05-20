@@ -23,9 +23,9 @@ export class EventFormComponent {
     private ngZone: NgZone,
     private httpClient: HttpClient,
     private userStore: UserStoreService,
-    private auth : AuthService,
+    private auth: AuthService,
     private router: Router,
-    private toast : NgToastService
+    private toast: NgToastService
 
   ) {
     this.eventForm = this.formBuilder.group({
@@ -48,16 +48,15 @@ export class EventFormComponent {
   async onSubmit() {
     var EventDto = this.eventForm.value;
     this.userStore.getUserNameFromStore()
-    .subscribe(val => {
-      let userNameFromToken = this.auth.getUserNameFromToken(); // When refresing the page the observable will be empty so it will take the name from the token.
-      this.userName = val || userNameFromToken;
-    });
+      .subscribe(val => {
+        let userNameFromToken = this.auth.getUserNameFromToken(); // When refresing the page the observable will be empty so it will take the name from the token.
+        this.userName = val || userNameFromToken;
+      });
     EventDto = { ...this.eventForm.value, Creator: this.userName };
     console.log(EventDto);
     this.httpClient.post<any>(`${this.baseUrl}`, EventDto).subscribe(
       (response) => {
         // Request was successful
-        // alert('the Event was created successfuly!');
         this.toast.success({ detail: "SUCCESS", summary: "The event was created successfuly!", duration: 2000 });
         this.router.navigate(['dashboard']);
       },
