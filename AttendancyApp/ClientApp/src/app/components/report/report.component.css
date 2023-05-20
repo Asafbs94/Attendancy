@@ -1,0 +1,128 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap");
+
+* {
+  margin: auto;
+  margin-top: 0;
+  outline: none;
+  border: none;
+  text-decoration: none;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+body {
+  background: #f9f9f9;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.date-selector {
+  text-align: center;
+}
+
+.date-selector h1 {
+  margin-bottom: 20px;
+}
+
+.chart-container {
+  text-align: center;
+}
+
+.chart-container #chart {
+  max-width: 380px;
+  margin: 35px auto;
+  padding: 0;
+}
+
+.notify-button {
+  background-color: #1b6ec2;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.notify-button:hover {
+  background-color: #0056b3;
+}
+
+.notify-button:focus {
+  outline: none;
+}
+
+.message-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 45vh;
+}
+
+.message-card {
+  background-color: #f5f5f5;
+  margin: auto;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  width: 400px;
+}
+
+.message-content {
+  margin-bottom: 16px;
+}
+
+.message-content p {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.4;
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+}
+
+.clipboard-btn {
+  padding: 8px 16px;
+  font-size: 14px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin: auto;
+  transition: background-color 0.3s ease;
+}
+
+.clipboard-btn:hover {
+  background-color: #0056b3;
+}
+
+.clipboard-btn:focus {
+  outline: none;
+}
+.clipboard-btn.abort {
+  background-color: #dc3545;
+  color: #fff;
+  padding: 8px 16px;
+  font-size: 14px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin: auto;
+  transition: background-color 0.3s ease;
+}
+
+.clipboard-btn.abort:hover {
+  background-color: #c82333;
+}
+
+.clipboard-btn.abort:focus {
+  outline: none;
+}

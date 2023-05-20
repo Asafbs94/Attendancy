@@ -20,6 +20,8 @@ import { TokenInterceptor } from './interseptors/token.interceptor';
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 import { EventRegistartionComponent } from './components/event-registartion/event-registartion.component';
 import { MailComponent } from './components/mail/mail.component';
+import { NgApexchartsModule } from "ng-apexcharts";
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -40,6 +42,7 @@ import { MailComponent } from './components/mail/mail.component';
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
     FormsModule,
+    NgApexchartsModule,
     AppRoutingModule,
     ReactiveFormsModule,
     NgToastModule,
