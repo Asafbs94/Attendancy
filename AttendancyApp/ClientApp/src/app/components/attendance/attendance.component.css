@@ -1,49 +1,5 @@
-.student-card {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 300px;
-  height: 100px;
-  border-radius: 10px;
-  background-color: white;
-  box-shadow: 0 20px 35px rgba(0, 0, 0, 0.1);
-  transition: opacity 0.5s ease-in-out;
-  opacity: 0;
-}
-.student-card.fade-in {
-  opacity: 1;
-}
-.student-card-picture-container {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  overflow: hidden;
-  margin-top: 20px;
-  }
-
-  .student-card-picture {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  }
-
-  .student-card-name {
-  margin-top: 20px;
-  font-size: 18px;
-  font-weight: bold;
-  text-align: center;
-  }
-
-  .student-card-list {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  margin-top: 50px;
-  }
-/* Import Google Fonts */
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap");
 
-/* Reset default margins and padding */
 * {
   margin: 0;
   padding: 0;
@@ -54,10 +10,10 @@
   font-family: "Poppins", sans-serif;
 }
 
-/* Set background color for the body element */
-body {}
+body {
+  background: #f9f9f9;
+}
 
-/* Style the navigation menu */
 nav {
   position: absolute;
   top: 0;
@@ -65,19 +21,16 @@ nav {
   height: 100vh;
   left: 0;
   width: 60px;
-  /* width: 280px; */
   overflow: hidden;
   transition: 1s;
   background: rgba(220, 218, 218, 0.8);
 }
 
-/* Increase the width of the navigation menu on hover */
 nav:hover {
   width: 280px;
   transition: 1s;
 }
 
-/* Style the logo in the navigation menu */
 .logo {
   text-align: center;
   display: flex;
@@ -85,14 +38,12 @@ nav:hover {
   padding-bottom: 3rem;
 }
 
-/* Style the logo image */
 .logo img {
   width: 45px;
   height: 45px;
   border-radius: 50%;
 }
 
-/* Style the logo text */
 .logo span {
   font-weight: bold;
   padding-left: 15px;
@@ -100,7 +51,6 @@ nav:hover {
   text-transform: uppercase;
 }
 
-/* Style the links in the navigation menu */
 a {
   position: relative;
   width: 280px;
@@ -110,7 +60,6 @@ a {
   padding: 10px;
 }
 
-/* Style the font awesome icons in the navigation menu */
 nav .fas {
   position: relative;
   width: 40px;
@@ -120,43 +69,42 @@ nav .fas {
   text-align: center;
 }
 
-/* Style the link text in the navigation menu */
 .nav-item {
   position: relative;
   top: 12px;
   margin-left: 10px;
 }
 
-/* Change the background color of links on hover */
 a:hover {
   background: #eee;
 }
 
-/* Change the color of font awesome icons on hover */
 a:hover i {
   color: #34AF6D;
   transition: 0.5s;
 }
 
-/* Style the logout link in the navigation menu */
 .logout {
   position: absolute;
   bottom: 0;
 }
 
-/* Style the container element */
 .container {
   display: flex;
+  justify-content: center;
+  align-items: center;
+  height: calc(100vh - 60px);
 }
 
-/* Style the main section */
 .main {
   position: initial;
   width: 100%;
   padding: 20px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-/* Style the header in the main section */
 .main-top {
   display: flex;
   align-items: center;
@@ -164,14 +112,12 @@ a:hover i {
   margin-bottom: 20px;
 }
 
-/* Style the title in the main section */
 .main-top h1 {
   font-size: 24px;
   font-weight: 600;
   margin-right: 20px;
 }
 
-/* Style the settings icon in the main section */
 .main-top i {
   margin-left: auto;
   color: rgb(110, 109, 109);
@@ -179,13 +125,11 @@ a:hover i {
   font-size: 18px;
 }
 
-/* Style the QR code container */
 .qr-code-container {
   text-align: center;
   margin-top: 20px;
 }
 
-/* Style the QR code image */
 .qr-code-container img {
   display: block;
   max-width: 500px;
@@ -194,7 +138,6 @@ a:hover i {
   margin-top: 50px;
 }
 
-/* Style the instruction text below the QR code */
 .qr-code-container p {
   font-size: 18px;
   margin-top: 20px;

@@ -92,7 +92,9 @@ namespace AttendancyApp.Controllers
             {
                 hubContext.Clients.All.SendAsync("studentReceived", attendand);
             }
-            return Ok(Alist);
+            var Parti = _dbContext.Events.Include("Participants").FirstOrDefault().Participants.ToList();
+
+            return Ok(Parti);
         }
 
         [HttpPost]
