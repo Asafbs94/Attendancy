@@ -68,7 +68,7 @@ namespace AttendancyApp.Controllers
             return Ok(eventModel);
         }
         [HttpGet("GetParticipants/{guid}")]
-        public IActionResult GetParticipants(string guid)
+        public async Task<IActionResult> GetParticipants(string guid)
         {
             var P = _dbContext.Events.Include("Participants").Where(e => e.Guid.ToString() == guid).FirstOrDefault()?.Participants;
             var e = _dbContext.Events.Include("Participants").Where(e => e.Guid.ToString() == guid).FirstOrDefault();
@@ -91,7 +91,8 @@ namespace AttendancyApp.Controllers
 
             foreach(Attendand attendand in Alist)
             {
-                hubContext.Clients.All.SendAsync("studentReceived", attendand);
+                await hubContext.Clients.All.SendAsync("studentReceived", attendand);
+                await Task.Delay(TimeSpan.FromSeconds(1.5));
             }
             var Parti = _dbContext.Events.Include("Participants").Where(e => e.Guid.ToString() == guid).FirstOrDefault().Participants.ToList();
 

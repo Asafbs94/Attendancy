@@ -44,7 +44,7 @@ export class AttendanceComponent implements OnInit {
     this.http.get<Event[]>('/Event/GetParticipants/' + selectedEventGuid).subscribe(
       response => {
         console.log(response)
-        this.participants = response;
+        //this.participants = response;
       },
       error => {
         console.error(error);
