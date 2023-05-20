@@ -59,7 +59,7 @@ namespace AttendancyApp.Controllers
                             name = newParticipant.Email.IsNullOrEmpty() ? newParticipant.Id.ToString() : newParticipant.Email,
                             profilePictureUrl = currentEvent.EventName.ToString(),
                         };
-                        hubContext.Clients.All.SendAsync("studentReceived", a);
+                        await hubContext.Clients.All.SendAsync("studentReceived", a);
 
                         return Ok();
                     }

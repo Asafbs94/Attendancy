@@ -43,6 +43,7 @@ namespace AttendancyApp.UtilityService
                 }
                 catch(Exception ex)
                 {
+                    Console.Error.WriteLine(ex);
                     throw;
                 }
                 finally
