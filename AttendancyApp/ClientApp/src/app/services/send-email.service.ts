@@ -11,7 +11,15 @@ export class SendEmailService {
 
   constructor(private http: HttpClient) { }
 
-  sendEmail(sendEmailObj: SendEmailModel) {
-    return this.http.post(`${this.baseUrl}/send-email`, sendEmailObj);
+  // sendEmail(sendEmailObj: SendEmailModel) {
+  //   return this.http.post(`${this.baseUrl}/send-email`, sendEmailObj);
+  // }
+
+  sendInvitationEmail(sendEmailObj: SendEmailModel) {
+    return this.http.post(`${this.baseUrl}/send-email/invitation`, sendEmailObj);
+  }
+
+  sendAbsentEmail(sendEmailObj: SendEmailModel) {
+    return this.http.post(`${this.baseUrl}/send-email/absent`, sendEmailObj);
   }
 }

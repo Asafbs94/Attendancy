@@ -188,7 +188,7 @@ namespace AttendancyApp.Controllers
             user.ResetPasswordExpiry = DateTime.Now.AddMinutes(15);
             string from = _configuration["EmailSettings:From"];
 
-            var emailModel = new EmailModel(email, "Reset password", EmailBody.EmailStringBody(email, emailToken));
+            var emailModel = new EmailModel(email, "Reset password", EmailBodyTemplates.ResetPasswordEmailStringBody(email, emailToken));
 
             _emailService.SendEmail(emailModel);
             _authContext.Entry(user).State = EntityState.Modified;
@@ -242,31 +242,62 @@ namespace AttendancyApp.Controllers
             });
         }
 
-        [HttpPost("send-email")]
-        public async Task<IActionResult> SendEmailAsync([FromBody] EmailModel model)
+        [HttpPost("send-email/invitation")]
+        public IActionResult SendInvitationEmail([FromBody] EmailModel model)
         {
-            var email = model.To;
-            var user = await _authContext.Users.FirstOrDefaultAsync(u => u.Email == email);
-
-            if (user is null)
-            {
-                return NotFound(new
+            var emails = model.To.Split(',');
+            if (emails.Length == 0)
+                return BadRequest(new
                 {
-                    StatusCode = 404,
-                    Message = "Email doesn't exists!"
+                    StatusCode = 400,
+                    Message = "Email not provided"
                 });
+
+            foreach (var email in emails)
+            {
+                if (string.IsNullOrEmpty(email))
+                    continue; // Skip empty email addresses
+
+                var emailModel = new EmailModel(email, model.Subject, EmailBodyTemplates.EmailInvitationStringBody(email, model.Subject, model.Content));
+                _emailService.SendEmail(emailModel);
+                //_emailService.SendEmail(new EmailModel(email, model.Subject + " dontReply", model.Content));
             }
 
-            //string from = _configuration["EmailSettings:From"];
-
-            //var emailModel = new EmailModel(email, model.Subject, EmailBody.EmailStringBody(email, emailToken));
-
-            _emailService.SendEmail(model);
             return Ok(new
             {
                 StatusCode = 200,
                 Message = "Email sent."
             });
         }
+
+
+        [HttpPost("send-email/absent")]
+        public IActionResult SendAbsentEmail([FromBody] EmailModel model)
+        {
+            var emails = model.To.Split(',');
+            if (emails.Length == 0)
+                return BadRequest(new
+                {
+                    StatusCode = 400,
+                    Message = "Email not provided"
+                });
+
+            foreach (var email in emails)
+            {
+                if (string.IsNullOrEmpty(email))
+                    continue; // Skip empty email addresses
+
+                var emailModel = new EmailModel(email, model.Subject, EmailBodyTemplates.EmailAbsentStringBody(email, model.Subject, model.Content));
+                _emailService.SendEmail(emailModel);
+                //_emailService.SendEmail(new EmailModel(email, model.Subject + " dontReply", model.Content));
+            }
+
+            return Ok(new
+            {
+                StatusCode = 200,
+                Message = "Email sent."
+            });
+        }
+
     }
 }

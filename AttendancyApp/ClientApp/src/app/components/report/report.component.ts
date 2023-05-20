@@ -10,6 +10,10 @@ import {
   ApexResponsive,
   ApexChart
 } from "ng-apexcharts";
+import { SendEmailService } from 'src/app/services/send-email.service';
+import { SendEmailModel } from 'src/app/models/send-email-model.model';
+import { NgToastService } from 'ng-angular-popup';
+import { Router } from '@angular/router';
 
 export type ChartOptions = {
   series: ApexNonAxisChartSeries;
@@ -31,10 +35,16 @@ export class ReportComponent implements OnInit {
   participants: any[] = [];
   userName = "";
   showmsg = false;
+
+  sendEmailObj = new SendEmailModel();
+
   constructor(
     private http: HttpClient,
     private userStore: UserStoreService,
-    private auth: AuthService
+    private auth: AuthService,
+    private emailService: SendEmailService,
+    private toast: NgToastService,
+    private router: Router
   ) {
     this.chartOptions = {
       series: [0, 0], // Initial counts for Arrived and Absent
@@ -102,8 +112,34 @@ export class ReportComponent implements OnInit {
     console.log("Notify Absent button clicked");
     // Add your logic to send notifications or handle absent participants
   }
-  sengAbsentMsg(){
+  sengAbsentMsg() {
 
+    this.sendEmailObj.to = this.participants
+      .filter(p => p.isArrived == false)
+      .map(p => p.email.toString())
+      .join(',').toString();
+    this.sendEmailObj.subject = 'AttendancyApp mail: Absent event!';
+    this.sendEmailObj.content = 'You have been absent from ' + this.selectedDate.toString() + " event!";
+
+    this.emailService.sendAbsentEmail(this.sendEmailObj)
+      .subscribe({
+        next: (res) => {
+          this.toast.info({
+            detail: "INFO",
+            summary: "Email/s sent.",
+            duration: 3000
+          });
+        },
+        error: (err) => {
+          this.toast.error({
+            detail: "ERROR",
+            summary: err.error.message,
+            duration: 5000
+          });
+        }
+      });
+
+    this.router.navigate(['dashboard']);
   }
 
 

@@ -71,7 +71,6 @@ export class EventFormComponent {
         this.showInvite = true;
         this.eventGuid = response.guid;
         this.generateInviteMessage(EventDto); // Generate the invite message
-        this.router.navigate(['dashboard']);
       },
       (error) => {
         // Handle any errors that occurred during the request
