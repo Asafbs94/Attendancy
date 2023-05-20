@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import * as signalR from "@microsoft/signalr";
 import { Subject } from 'rxjs';
-import { ToastrService } from 'ngx-toastr';
+import { NgToastService } from 'ng-angular-popup';
 
 @Injectable({
   providedIn: 'root'
@@ -10,9 +10,9 @@ export class SignalrService {
   public hubConnection: signalR.HubConnection;
   studentReceived = new Subject<any>();
 
-  constructor(private toastr: ToastrService) {
+  constructor(private toast: NgToastService) {
     this.startConnection();
-    this.hubConnection.on("NotifyArrival",(StudentID)=>{
+    this.hubConnection.on("studentReceived",(StudentID)=>{
       this.NotiftyArrival(StudentID)
     })
 
@@ -20,7 +20,7 @@ export class SignalrService {
 
   startConnection() {
     this.hubConnection = new signalR.HubConnectionBuilder()
-      .withUrl("https://localhost:7267/toastr",{
+      .withUrl("http://localhost:5016/toastr",{
         skipNegotiation:true,
         transport: signalR.HttpTransportType.WebSockets
       })
@@ -30,9 +30,9 @@ export class SignalrService {
       .then(() => console.log('Connection started'))
       .catch(err => console.log('Error while starting connection: ' + err))
   }
-  NotiftyArrival(StudentID: string){
-      this.toastr.success(StudentID + " Has Arrived!", 'New Student');
-      }
+  NotiftyArrival(StudentID: any){
+    //this.toast.success({ detail: "SUCCESS", summary:StudentID.name+   ' Has arrived', duration: 2000 });
+  }
 
       addStudentReceivedListener(): void {
         this.hubConnection.on('studentReceived', (student: any) => {

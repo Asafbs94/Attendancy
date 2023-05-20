@@ -5,8 +5,9 @@
     <option *ngFor="let e of events" [value]="e.eventName">{{ e.eventName }}</option>
   </select>
 </div>
-<div *ngIf="selectedDate" class="student-card-list">
-  <div class="student-card" *ngFor="let p of participants" [ngClass]="{'fade-in': p.fadedIn}">
+<div class="student-card-list">
+  <div class="student-card" *ngFor="let p of participants" [class.fadedIn]="p.fadedIn">
     <div class="student-card-name">{{ p.name }}</div>
   </div>
+
 </div>

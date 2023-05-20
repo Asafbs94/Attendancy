@@ -157,3 +157,28 @@ button:hover {
   color: #34AF6D;
   transition: 0.5s;
 }
+.student-card {
+  opacity: 0;
+  transition: opacity 0.5s;
+  background-color: #b6d8ed;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+  margin: 10px;
+  width: 200px;
+  text-align: center;
+}
+
+.student-card-name {
+  font-size: 14px;
+}
+
+
+.student-card.fadedIn {
+  opacity: 1;
+}
+.student-card-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}

@@ -31,11 +31,11 @@ export class AttendanceComponent implements OnInit {
     this.signalrService.startConnection();
     this.signalrService.addStudentReceivedListener();
     this.signalrService.studentReceived.subscribe((p: any) => {
+      if( p.profilePictureUrl.toLowerCase() === this.selectedDate.toLowerCase())
       p.fadedIn = true;
-      console.log(p);
       this.participants.push(p);
-      this.participants = Array.from(new Set(this.participants)); // Make the participants list unique
     });
+
   }
 
   async getParticipants() {
