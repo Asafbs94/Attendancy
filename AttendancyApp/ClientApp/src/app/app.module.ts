@@ -18,7 +18,8 @@ import { EventFormComponent } from './components/event-form/event-form.component
 import { NgToastModule } from 'ng-angular-popup';
 import { TokenInterceptor } from './interseptors/token.interceptor';
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
-
+import { EventRegistartionComponent } from './components/event-registartion/event-registartion.component';
+import { MailComponent } from './components/mail/mail.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -31,7 +32,9 @@ import { ResetPasswordComponent } from './components/reset-password/reset-passwo
     LoginComponent,
     SignupComponent,
     EventFormComponent,
-    ResetPasswordComponent
+    ResetPasswordComponent,
+    EventRegistartionComponent,
+    MailComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),

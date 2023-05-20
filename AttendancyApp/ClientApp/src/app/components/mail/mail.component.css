@@ -1,0 +1,67 @@
+.mail-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 70vh; /* Increase the height as needed */
+}
+
+.title {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.form-container {
+  position: relative;
+  width: 500px;
+  height: 450px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #f5f5f5;
+}
+
+label {
+  font-weight: bold;
+}
+
+#toField {
+  width: 100%;
+  padding: 8px;
+  height: 80px;
+  margin-bottom: 10px;
+  border-radius: 3px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+#messageBodyField {
+  width: 100%;
+  height: 200px;
+  padding: 8px;
+  margin-bottom: 10px;
+  border-radius: 3px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+.invalid-email {
+  border-color: red;
+}
+
+button {
+  position: absolute;
+  bottom: 15px;
+  right: 10px;
+  padding: 8px 16px;
+  border-radius: 3px;
+  background-color: #4CAF50;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}

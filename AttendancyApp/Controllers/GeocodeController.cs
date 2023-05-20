@@ -73,6 +73,5 @@ namespace AttendancyApp.Controllers
     public class Result
     {
         public string FormattedAddress { get; set; }
-        // Add other properties you may need
     }
 }

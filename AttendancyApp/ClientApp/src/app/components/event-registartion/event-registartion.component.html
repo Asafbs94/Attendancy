@@ -1,0 +1,17 @@
+<div class="container">
+  <app-navbar></app-navbar>
+  <h2>Sign Up For The Event Below</h2>
+  <form (ngSubmit)="submitForm()" class="event-form">
+    <div class="form-field">
+      <label for="email">Email:</label>
+      <input  placehodler="This Field Is Required" type="email" id="email" name="email" [(ngModel)]="participant.email" required>
+    </div>
+    <div class="form-field">
+      <label for="participantId">Your ID:</label>
+      <input placehodler="This Field Is Required" type="number" id="participantId" name="participantId" [(ngModel)]="participant.participantId" required>
+    </div>
+    <div class="button-container">
+      <button type="submit" class="submit-btn">Submit</button>
+    </div>
+  </form>
+</div>

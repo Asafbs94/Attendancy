@@ -6,6 +6,8 @@ import { AuthService } from 'src/app/services/auth.service';
 import { Router } from '@angular/router';
 import { NgToastService } from 'ng-angular-popup';
 import { environment } from 'src/environments/environment';
+import { getBaseUrl } from 'src/main';
+
 @Component({
   selector: 'app-event-form',
   templateUrl: './event-form.component.html',
@@ -15,9 +17,13 @@ export class EventFormComponent {
   eventForm: FormGroup;
   @ViewChild('eventLocation') locationInput: ElementRef;
   private baseUrl: string = "/Event";
-  userName = ""
+  private url = getBaseUrl();
+  userName = "";
+  showInvite = false;
   suggestions: string[] = [];
-
+  inviteMessage: string = "";
+  userEmail = ""
+  eventGuid = "";
   constructor(
     private formBuilder: FormBuilder,
     private ngZone: NgZone,
@@ -26,7 +32,6 @@ export class EventFormComponent {
     private auth: AuthService,
     private router: Router,
     private toast: NgToastService
-
   ) {
     this.eventForm = this.formBuilder.group({
       EventName: ['', Validators.required],
@@ -47,17 +52,25 @@ export class EventFormComponent {
 
   async onSubmit() {
     var EventDto = this.eventForm.value;
-    this.userStore.getUserNameFromStore()
+    this.userStore.getUserNameFromStore().subscribe(val => {
+      let userNameFromToken = this.auth.getUserNameFromToken(); // When refreshing the page, the observable will be empty, so it will take the name from the token.
+      this.userName = val || userNameFromToken;
+    });
+    this.userStore.getEmailFromStore()
       .subscribe(val => {
-        let userNameFromToken = this.auth.getUserNameFromToken(); // When refresing the page the observable will be empty so it will take the name from the token.
-        this.userName = val || userNameFromToken;
+        let emailFromToken = this.auth.getEmailFromToken(); // When refresing the page the observable will be empty so it will take the name from the token.
+        this.userEmail = val || emailFromToken;
       });
     EventDto = { ...this.eventForm.value, Creator: this.userName };
     console.log(EventDto);
     this.httpClient.post<any>(`${this.baseUrl}`, EventDto).subscribe(
       (response) => {
         // Request was successful
-        this.toast.success({ detail: "SUCCESS", summary: "The event was created successfuly!", duration: 2000 });
+        console.log(response.guid);
+        this.toast.success({ detail: "SUCCESS", summary: "The event was created successfully!", duration: 2000 });
+        this.showInvite = true;
+        this.eventGuid = response.guid;
+        this.generateInviteMessage(EventDto); // Generate the invite message
         this.router.navigate(['dashboard']);
       },
       (error) => {
@@ -67,7 +80,27 @@ export class EventFormComponent {
     );
   }
 
+  generateInviteMessage(eventData: any) {
+    console.log(this.eventGuid)
+    // Customize the invite message as desired
+    // Customize the invite message as desired
+    this.inviteMessage = `You're invited to the event: ${eventData.EventName}` + '\n';
+    this.inviteMessage += `Date: ${eventData.EventDate}` + '\n';
+    this.inviteMessage += `Time: ${eventData.EventTime}` + '\n';
+    this.inviteMessage += `Location: ${eventData.EventLocation} ` + '\n';
+    this.inviteMessage += `For Registration: ${this.url}eventregistartion/` + this.eventGuid.toString() + '\n';;
 
+  }
+
+  copyToClipboard() {
+    const el = document.createElement('textarea');
+    el.value = this.inviteMessage;
+    document.body.appendChild(el);
+    el.select();
+    document.execCommand('copy');
+    document.body.removeChild(el);
+    this.toast.success({ detail: "SUCCESS", summary: "Message copied to clipboard!", duration: 2000 });
+  }
   onLocationInput() {
     const locationInput = document.getElementById('eventLocation') as HTMLInputElement;
     const location = locationInput.value;
@@ -95,4 +128,8 @@ export class EventFormComponent {
     });
     this.suggestions = [];
   }
+  goToMail() {
+    this.router.navigate(['mail'], { queryParams: { message: this.inviteMessage } })
+  }
 }
+

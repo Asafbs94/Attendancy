@@ -1,9 +1,9 @@
 .container {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 100vh;
-  margin-top: -130px;
+  height: 45vh;
 }
 
 .event-form {
@@ -30,7 +30,7 @@ textarea {
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 4px;
-  box-sizing: border-box; /* Add this line to include padding in width calculation */
+  box-sizing: border-box;
 }
 
 .submit-btn {
@@ -73,6 +73,7 @@ textarea {
 .suggestion:hover {
   background-color: #f2f2f2;
 }
+
 .message-container {
   display: flex;
   justify-content: center;
@@ -125,4 +126,13 @@ textarea {
 .message-content {
   margin-bottom: 16px;
   white-space: pre-line;
+}
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
 }

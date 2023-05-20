@@ -3,9 +3,9 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "prenostart": "node aspnetcore-https",
+    "prenostart": "",
     "start": "run-script-os",
-    "start:windows": "ng serve --port 44431 --ssl --ssl-cert \"%APPDATA%\\ASP.NET\\https\\%npm_package_name%.pem\" --ssl-key \"%APPDATA%\\ASP.NET\\https\\%npm_package_name%.key\"",
+    "start:windows": "ng serve",
     "start:default": "ng serve --port 44431 --ssl --ssl-cert \"$HOME/.aspnet/https/${npm_package_name}.pem\" --ssl-key \"$HOME/.aspnet/https/${npm_package_name}.key\"",
     "start:new": "ng serve --port 3333 --host 0.0.0.0",
     "build": "ng build",
