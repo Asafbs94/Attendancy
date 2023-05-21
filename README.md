@@ -1,7 +1,4 @@
 # Attendancy-track app 📅
-
-![Attendancy-track app](https://link-to-image.png)
-
 A web application for tracking attendance and absenteeism in organizations.
 Built with:
 [DotNet7](https://dotnet.microsoft.com/) 
