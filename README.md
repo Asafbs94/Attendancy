@@ -13,7 +13,7 @@ Built with:
 - Email notifications via an [SMTP server](https://en.wikipedia.org/wiki/Simple_Mail_Transfer_Protocol)
 - Data storage using [SQL Server](https://www.microsoft.com/sql-server/)
 - JWT token authentication for secure access [JWT.IO](https://jwt.io/)
-- Docker support
+- Docker support [Docker] (https://www.docker.com/)
 
 ## Description
 
