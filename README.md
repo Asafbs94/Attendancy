@@ -12,7 +12,7 @@ Built with:
 - Real-time updates using [SignalR](https://dotnet.microsoft.com/aspnet/signalr)
 - Email notifications via an [SMTP server](https://en.wikipedia.org/wiki/Simple_Mail_Transfer_Protocol)
 - Data storage using [SQL Server](https://www.microsoft.com/sql-server/)
-- JWT token authentication for secure access
+- JWT token authentication for secure access [jwt.io](https://jwt.io/)
 - Docker support
 
 ## Description
