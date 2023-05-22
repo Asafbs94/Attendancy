@@ -1,20 +1,27 @@
 <app-navbar></app-navbar>
 <div class="container" *ngIf="!showmsg">
   <div class="content">
-    <div class="date-selector" style="text-align: center;">
-      <h1>Please select an event:</h1>
-      <select id="dateDropdown" [(ngModel)]="selectedDate" (change)="getParticipants()">
-        <option *ngFor="let e of events" [value]="e.eventName">{{ e.eventName }}</option>
-      </select>
+    <div class="date-selector text-center mt-5">
+      <h1>Report events:</h1>
+      <button class="btn btn-primary mt-4 dropdown-toggle custom-button rounded border" type="button" id="dateDropdown"
+        data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        {{ selectedDate || 'Select Event' }}
+      </button>
+      <ul class="dropdown-menu border" aria-labelledby="dateDropdown">
+        <li *ngFor="let e of events">
+          <a class="dropdown-item" (click)="selectedDate = e.eventName; getParticipants()">{{ e.eventName
+            }}</a>
+        </li>
+      </ul>
     </div>
 
-    <div class="chart-container" *ngIf="selectedDate">
+    <div class="chart-container mt-4" *ngIf="selectedDate">
       <div id="chart">
         <apx-chart [series]="chartOptions.series" [chart]="chartOptions.chart" [labels]="chartOptions.labels"
           [responsive]="chartOptions.responsive"></apx-chart>
       </div>
 
-      <button class="notify-button" (click)="notifyAbsent()">Notify Absent</button>
+      <button class="btn btn-warning mt-3 rounded border" (click)="notifyAbsent()">Notify Absent</button>
     </div>
   </div>
 </div>
@@ -30,8 +37,8 @@
       </ul>
     </div>
     <div class="button-container">
-      <button (click)="sengAbsentMsg()" class="clipboard-btn">Send message</button>
-      <button (click)="showmsg = false" class="clipboard-btn abort">Abort</button>
+      <button (click)="sengAbsentMsg()" class="btn btn-primary rounded border">Send message</button>
+      <button (click)="showmsg = false" class="btn btn-danger rounded border">Abort</button>
     </div>
   </div>
 </div>

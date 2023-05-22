@@ -182,3 +182,14 @@ button:hover {
   flex-wrap: wrap;
   justify-content: center;
 }
+
+
+.date-selector {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.form-select {
+  width: 300px;
+}
