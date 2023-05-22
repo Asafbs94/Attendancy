@@ -6,36 +6,75 @@
   <link rel="stylesheet" href="dashboard.component.css" />
   <!-- Font Awesome CDN Link -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+  <!-- Bootstrap CSS CDN Link -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.0/css/bootstrap.min.css" />
   <style>
-    html, body {
+    html,
+    body {
       height: 100%;
       display: flex;
       justify-content: center;
       align-items: center;
     }
+
+    .custom-button {
+      border: 1px solid #ced4da;
+    }
+
+    /* Custom CSS for dropdown menu */
+    .dropdown-menu {
+      animation: roll 0.3s ease-in-out;
+      transform-origin: top;
+      display: none;
+    }
+
+    .show .dropdown-menu {
+      display: block;
+    }
+
+    @keyframes roll {
+      0% {
+        opacity: 0;
+        transform: scaleY(0.8);
+      }
+
+      100% {
+        opacity: 1;
+        transform: scaleY(1);
+      }
+    }
   </style>
 </head>
 
 <body>
-  <div class="container">
+  <div class="container mt-5">
     <app-navbar></app-navbar>
     <section class="main">
-      <h1 style="text-align: center;" *ngIf="!selectedDate">Please select an event:</h1>
-      <div class="date-selector" style="text-align: center;">
-        <select id="dateDropdown" [(ngModel)]="selectedDate" (change)="generateQRCode()">
-          <option *ngFor="let e of events" [value]="e.eventName">{{ e.eventName }}</option>
-        </select>
-      </div>
+      <h1 style="text-align: center;" *ngIf="!selectedDate">Select an event:</h1>
       <h5 style="text-align: center;" *ngIf="selectedDate">Please scan the QR code below to apply your attendance</h5>
+      <div class="date-selector" style="text-align: center;">
+        <div class="dropdown">
+          <button class="btn btn-primary mt-4 dropdown-toggle custom-button" type="button" id="dateDropdown"
+            data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            {{ selectedDate || 'Events' }}
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="dateDropdown">
+            <li *ngFor="let e of events">
+              <a class="dropdown-item" (click)="selectedDate = e.eventName; generateQRCode()">{{ e.eventName
+                }}</a>
+            </li>
+          </ul>
+        </div>
+      </div>
       <div class="qr-code-container" style="text-align: center;">
         <img *ngIf="qrCodeData" [src]="qrCodeData" alt="QR code"
           style="width: 400px; height: 400px; display: block; margin: 0 auto;">
       </div>
     </section>
   </div>
-  <!-- <h1>{{userFullName}}</h1>
-  <h1>{{userEmail}}</h1>
-  <h1>{{userName}}</h1> -->
+
+  <!-- Bootstrap JS CDN Link -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.0/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>

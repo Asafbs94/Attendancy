@@ -2,7 +2,7 @@
 <ng-container>
   <div *ngIf="!showInvite">
 
-    <form [formGroup]="eventForm" (ngSubmit)="onSubmit()" class="event-form">
+    <form [formGroup]="eventForm" (ngSubmit)="onSubmit()" class="event-form mt-4">
       <div class="form-field">
         <label for="eventName">Event Name</label>
         <input type="text" id="eventName" formControlName="EventName" required>
@@ -31,8 +31,8 @@
       <button type="submit" [disabled]="eventForm.invalid" class="submit-btn">Submit</button>
     </form>
   </div>
-  <div *ngIf="showInvite" class="message-container">
-    <div class="message-card">
+  <div *ngIf="showInvite" class="message-container m-5">
+    <div class="message-card border">
       <div class="message-content">
         <p>{{ inviteMessage }}</p>
       </div>

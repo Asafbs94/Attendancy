@@ -1,15 +1,17 @@
 <app-navbar></app-navbar>
-<h1 style="text-align: center; margin-top: 1rem;">Let's see who arrived!</h1>
-<ng-container *ngIf="selectedDate==''">
-  <div  class="date-selector" style="text-align: center;">
-    <select id="dateDropdown" [(ngModel)]="selectedDate" (change)="getParticipants()">
-      <option *ngFor="let e of events" [value]="e.eventName">{{ e.eventName }}</option>
-    </select>
+<h1 class="mt-5 text-center">Let's see who arrived!</h1>
+<ng-container>
+  <div class="date-selector text-center">
+    <div class="dropdown">
+      <select class="form-select border" id="dateDropdown" [(ngModel)]="selectedDate" (change)="getParticipants()">
+        <option value="" class="text-center">Events</option>
+        <option class="text-center" *ngFor="let e of events" [value]="e.eventName">{{ e.eventName }}</option>
+      </select>
+    </div>
   </div>
 </ng-container>
 <div class="student-card-list">
   <div class="student-card" *ngFor="let p of participants" [class.fadedIn]="p.fadedIn">
     <div class="student-card-name">{{ p.name }}</div>
   </div>
-
 </div>
