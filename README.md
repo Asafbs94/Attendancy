@@ -1,4 +1,4 @@
-# Attendancy-track app 📅
+# Attendancy-Track App 📅
 A web application for tracking attendance and absenteeism in organizations.
 ## Built with 🔨
 - [Dotnet 7](https://dotnet.microsoft.com/) 
@@ -10,17 +10,12 @@ A web application for tracking attendance and absenteeism in organizations.
 - Email notifications via an [SMTP server](https://en.wikipedia.org/wiki/Simple_Mail_Transfer_Protocol)
 - Data storage using [SQL Server](https://www.microsoft.com/sql-server/)
 - JWT token authentication for secure access [JWT.IO](https://jwt.io/)
+- Google Maps API [📍](https://developers.google.com/maps)
 - Docker support [Docker](https://www.docker.com/)
 
 ## Description 📝
 
-This project aims to provide organizations with a reliable and efficient solution for tracking attendance and managing absenteeism. With the Attendancy-track app, you can easily monitor the presence of employees, students, or any other attendees within your organization. The app offers a range of features to streamline the process, including real-time updates for instant visibility, email notifications to keep everyone informed, and secure authentication using JWT tokens.
-
-One of the key features of the app is the ability to apply attendance using QR codes. Attendees can simply scan a unique QR code assigned to them, and the app will instantly record their attendance. This eliminates the need for manual data entry and ensures accurate and efficient attendance tracking.
-
-Attendancy-track app provides live updates as attendees scan their QR codes. You can see attendance records being populated in real-time on the screen, providing immediate feedback on the presence of attendees. This feature enables you to monitor attendance progress during events, meetings, or classes and make timely decisions based on the attendance data.
-
-The app also includes a mail sending feature. Event organizers can utilize this feature to send emails to attendees. They can easily invite attendees to events, meetings, or classes by sending email invitations, including all the relevant details such as date, time, and location. The app also allows organizers to send email alerts to attendees in case of absenteeism, reminding them of their commitment and promoting attendance accountability. This email sending feature enhances communication and organization, providing a convenient way for organizers to interact with their attendees.
+Attendancy-track is a powerful app that simplifies attendance tracking and absenteeism management for organizations. It utilizes QR codes for easy and accurate attendance recording, eliminating manual data entry. The app provides real-time updates, email notifications, and secure authentication using JWT tokens. With its built-in Google Maps API integration, the app ensures that the QR code scanner is within the event area, enhancing security. Organizers can monitor attendance progress and make informed decisions, while also sending invitations and alerts to attendees for better communication and organization.
 
 ## Development 🛠
 
