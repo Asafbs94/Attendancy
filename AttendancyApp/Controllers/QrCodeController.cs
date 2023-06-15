@@ -13,6 +13,7 @@ namespace AttendancyApp.Controllers
 {
     [ApiController]
     [Route("[controller]")]
+    [Authorize]
     public class QrCodeController : ControllerBase
     {
         private readonly IHubContext<myHub> hubContext;
