@@ -9,6 +9,7 @@ namespace AttendancyApp.Controllers
 {
     [ApiController]
     [Route("[controller]")]
+    [Authorize]
     public class GeocodeController : ControllerBase
     {
         private readonly HttpClient _httpClient = new HttpClient();

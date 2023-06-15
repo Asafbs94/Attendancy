@@ -14,6 +14,7 @@ namespace AttendancyApp.Controllers
 {
     [Route("[controller]")]
     [ApiController]
+    [Authorize]
     public class EventController : ControllerBase
     {
         private readonly AppDbContext _dbContext;
