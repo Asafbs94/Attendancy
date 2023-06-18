@@ -27,6 +27,7 @@
     "@auth0/angular-jwt": "^5.1.2",
     "@microsoft/signalr": "^7.0.0",
     "@types/chart.js": "^2.9.37",
+    "apexcharts": "^3.41.0",
     "bootstrap": "^5.2.0",
     "chart.js": "^4.1.2",
     "jquery": "^3.6.0",
